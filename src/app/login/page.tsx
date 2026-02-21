@@ -34,7 +34,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className={`min-h-screen ${lightMode ? 'bg-[#f8f9fc]' : 'bg-[#020208]'} text-[var(--foreground)] flex flex-col justify-center items-center p-6 relative overflow-hidden font-sans`}>
+        <div className={`min-h-screen ${lightMode ? 'bg-[#f5f5f9]' : 'bg-[#020208]'} text-[var(--foreground)] flex flex-col justify-center items-center p-6 relative overflow-hidden font-sans`}>
 
             {/* === Background: Neon light flows === */}
             <div className="absolute inset-0 z-0">

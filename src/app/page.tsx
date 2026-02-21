@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { LogOut, Plus, MapPin, Activity, ChevronRight, Sparkles } from 'lucide-react'
 import type { User } from '@supabase/supabase-js'
 import { useTheme } from '@/providers/ThemeProvider'
+import { useSwipeNav } from '@/hooks/useSwipeNav'
 
 interface Trip {
   id: string
@@ -24,6 +25,7 @@ export default function Home() {
   const [trips, setTrips] = useState<Trip[]>([])
   const [loading, setLoading] = useState(true)
   const { lightMode } = useTheme()
+  const { onTouchStart, onTouchEnd } = useSwipeNav({ rightPath: '/profile' })
 
   useEffect(() => {
     const checkUser = async () => {
@@ -86,7 +88,10 @@ export default function Home() {
   )
 
   return (
-    <div className={`min-h-screen ${lightMode ? 'bg-[#f8f9fc]' : 'bg-[#020208]'} text-[var(--foreground)] pb-24 font-sans selection:bg-teal-500/30 relative overflow-hidden`}>
+    <div className={`min-h-screen ${lightMode ? 'bg-[#f5f5f9]' : 'bg-[#020208]'} text-[var(--foreground)] pb-24 font-sans selection:bg-teal-500/30 relative overflow-hidden`}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       {/* === Background: Neon aurora === */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-25%] left-[-15%] w-[700px] h-[700px] bg-gradient-to-br from-blue-600/20 via-purple-600/15 to-transparent rounded-full blur-[160px] animate-breathe" style={{ animationDuration: '8s' }}></div>

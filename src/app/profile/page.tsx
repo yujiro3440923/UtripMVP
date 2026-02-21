@@ -8,6 +8,7 @@ import { User } from '@supabase/supabase-js'
 import { ArrowLeft, User as UserIcon, Award, Settings, Palette, Edit2, Check, Sparkles, Navigation, Lock, Share2, Sun, Moon } from 'lucide-react'
 import { useTheme } from '@/providers/ThemeProvider'
 import { toast } from 'react-hot-toast'
+import { useSwipeNav } from '@/hooks/useSwipeNav'
 
 interface UserStats {
     tripCount: number
@@ -37,6 +38,7 @@ const THEMES: ThemeOption[] = [
 export default function ProfilePage() {
     const router = useRouter()
     const { theme, setTheme, lightMode, toggleLightMode } = useTheme()
+    const { onTouchStart, onTouchEnd } = useSwipeNav({ leftPath: '/' })
 
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true)
@@ -137,7 +139,10 @@ export default function ProfilePage() {
     const rank = getRank(stats.tripCount)
 
     return (
-        <div className={`min-h-screen ${lightMode ? 'bg-[#f8f9fc]' : 'bg-[#020208]'} text-[var(--foreground)] pb-32 font-sans selection:bg-t-primary-500/30 relative overflow-hidden`}>
+        <div className={`min-h-screen ${lightMode ? 'bg-[#f5f5f9]' : 'bg-[#020208]'} text-[var(--foreground)] pb-32 font-sans selection:bg-t-primary-500/30 relative overflow-hidden`}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+        >
             {/* Background aurora */}
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-gradient-to-bl from-blue-600/15 via-purple-600/10 to-transparent rounded-full blur-[160px] animate-breathe" style={{ animationDuration: '8s' }}></div>
