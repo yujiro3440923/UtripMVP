@@ -10,6 +10,45 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Override default Tailwind colors with our dynamic theme variables */
+  --color-teal-200: var(--p-200);
+  --color-teal-300: var(--p-300);
+  --color-teal-400: var(--p-400);
+  --color-teal-500: var(--p-500);
+  --color-teal-900: var(--p-900);
+  --color-teal-950: var(--p-950);
+
+  --color-cyan-300: var(--s-300);
+  --color-cyan-400: var(--s-400);
+  --color-cyan-500: var(--s-500);
+
+  --color-blue-200: var(--a-200);
+  --color-blue-400: var(--a-400);
+  --color-blue-500: var(--a-500);
+  --color-blue-600: var(--a-600);
+  --color-blue-900: var(--a-900);
+  --color-blue-950: var(--a-950);
+
+  --color-t-primary-200: var(--p-200);
+  --color-t-primary-300: var(--p-300);
+  --color-t-primary-400: var(--p-400);
+  --color-t-primary-500: var(--p-500);
+  --color-t-primary-600: var(--p-400);
+  --color-t-primary-800: var(--p-900);
+  --color-t-primary-900: var(--p-900);
+  --color-t-primary-950: var(--p-950);
+
+  --color-t-secondary-300: var(--s-300);
+  --color-t-secondary-400: var(--s-400);
+  --color-t-secondary-500: var(--s-500);
+
+  --color-t-accent-200: var(--a-200);
+  --color-t-accent-400: var(--a-400);
+  --color-t-accent-500: var(--a-500);
+  --color-t-accent-600: var(--a-600);
+  --color-t-accent-900: var(--a-900);
+  --color-t-accent-950: var(--a-950);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,6 +56,205 @@
     --background: #050505;
     --foreground: #ededed;
   }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Theme Definitions                                                          */
+/* -------------------------------------------------------------------------- */
+
+/* Default Theme: Emerald (Teal + Cyan + Blue) */
+:root {
+  --p-200: #99f6e4;
+  /* teal-200 */
+  --p-300: #5eead4;
+  /* teal-300 */
+  --p-400: #2dd4bf;
+  /* teal-400 */
+  --p-500: #14b8a6;
+  /* teal-500 */
+  --p-900: #134e4a;
+  /* teal-900 */
+  --p-950: #042f2e;
+  /* teal-950 */
+
+  --s-300: #67e8f9;
+  /* cyan-300 */
+  --s-400: #22d3ee;
+  /* cyan-400 */
+  --s-500: #06b6d4;
+  /* cyan-500 */
+
+  --a-200: #bfdbfe;
+  /* blue-200 */
+  --a-400: #60a5fa;
+  /* blue-400 */
+  --a-500: #3b82f6;
+  /* blue-500 */
+  --a-600: #2563eb;
+  /* blue-600 */
+  --a-900: #1e3a8a;
+  /* blue-900 */
+  --a-950: #172554;
+  /* blue-950 */
+
+  --glow-color: rgba(45, 212, 191, 0.4);
+  --glow-color-transparent: rgba(45, 212, 191, 0);
+}
+
+/* Theme: Ocean (Sky + Indigo + Purple) */
+.theme-ocean {
+  --p-200: #bae6fd;
+  /* sky-200 */
+  --p-300: #7dd3fc;
+  /* sky-300 */
+  --p-400: #38bdf8;
+  /* sky-400 */
+  --p-500: #0ea5e9;
+  /* sky-500 */
+  --p-900: #0c4a6e;
+  /* sky-900 */
+  --p-950: #082f49;
+  /* sky-950 */
+
+  --s-300: #a5b4fc;
+  /* indigo-300 */
+  --s-400: #818cf8;
+  /* indigo-400 */
+  --s-500: #6366f1;
+  /* indigo-500 */
+
+  --a-200: #e9d5ff;
+  /* purple-200 */
+  --a-400: #c084fc;
+  /* purple-400 */
+  --a-500: #a855f7;
+  /* purple-500 */
+  --a-600: #9333ea;
+  /* purple-600 */
+  --a-900: #581c87;
+  /* purple-900 */
+  --a-950: #3b0764;
+  /* purple-950 */
+
+  --glow-color: rgba(56, 189, 248, 0.4);
+  --glow-color-transparent: rgba(56, 189, 248, 0);
+}
+
+/* Theme: Sunset (Orange + Rose + Yellow) */
+.theme-sunset {
+  --p-200: #fed7aa;
+  /* orange-200 */
+  --p-300: #fdba74;
+  /* orange-300 */
+  --p-400: #fb923c;
+  /* orange-400 */
+  --p-500: #f97316;
+  /* orange-500 */
+  --p-900: #7c2d12;
+  /* orange-900 */
+  --p-950: #431407;
+  /* orange-950 */
+
+  --s-300: #fda4af;
+  /* rose-300 */
+  --s-400: #fb7185;
+  /* rose-400 */
+  --s-500: #e11d48;
+  /* rose-500 */
+
+  --a-200: #fef08a;
+  /* yellow-200 */
+  --a-400: #facc15;
+  /* yellow-400 */
+  --a-500: #eab308;
+  /* yellow-500 */
+  --a-600: #ca8a04;
+  /* yellow-600 */
+  --a-900: #713f12;
+  /* yellow-900 */
+  --a-950: #422006;
+  /* yellow-950 */
+
+  --glow-color: rgba(251, 146, 60, 0.4);
+  --glow-color-transparent: rgba(251, 146, 60, 0);
+}
+
+/* Theme: Amethyst (Purple + Fuchsia + Pink) */
+.theme-amethyst {
+  --p-200: #e9d5ff;
+  /* purple-200 */
+  --p-300: #d8b4fe;
+  /* purple-300 */
+  --p-400: #c084fc;
+  /* purple-400 */
+  --p-500: #a855f7;
+  /* purple-500 */
+  --p-900: #581c87;
+  /* purple-900 */
+  --p-950: #3b0764;
+  /* purple-950 */
+
+  --s-300: #f0abfc;
+  /* fuchsia-300 */
+  --s-400: #e879f9;
+  /* fuchsia-400 */
+  --s-500: #d946ef;
+  /* fuchsia-500 */
+
+  --a-200: #fbcfe8;
+  /* pink-200 */
+  --a-400: #f472b6;
+  /* pink-400 */
+  --a-500: #ec4899;
+  /* pink-500 */
+  --a-600: #db2777;
+  /* pink-600 */
+  --a-900: #831843;
+  /* pink-900 */
+  --a-950: #500724;
+  /* pink-950 */
+
+  --glow-color: rgba(192, 132, 252, 0.4);
+  --glow-color-transparent: rgba(192, 132, 252, 0);
+}
+
+/* Theme: Monochrome (Neutral + Zinc) */
+.theme-monochrome {
+  --p-200: #e5e5e5;
+  /* neutral-200 */
+  --p-300: #d4d4d4;
+  /* neutral-300 */
+  --p-400: #a3a3a3;
+  /* neutral-400 */
+  --p-500: #737373;
+  /* neutral-500 */
+  --p-900: #171717;
+  /* neutral-900 */
+  --p-950: #0a0a0a;
+  /* neutral-950 */
+
+  --s-300: #d4d4d8;
+  /* zinc-300 */
+  --s-400: #a1a1aa;
+  /* zinc-400 */
+  --s-500: #71717a;
+  /* zinc-500 */
+
+  --a-200: #e7e5e4;
+  /* stone-200 */
+  --a-400: #a8a29e;
+  /* stone-400 */
+  --a-500: #78716c;
+  /* stone-500 */
+  --a-600: #57534e;
+  /* stone-600 */
+  --a-900: #1c1917;
+  /* stone-900 */
+  --a-950: #0c0a09;
+  /* stone-950 */
+
+  --glow-color: rgba(163, 163, 163, 0.4);
+  --glow-color-transparent: rgba(163, 163, 163, 0);
 }
 
 body {
@@ -31,9 +269,11 @@ body {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -44,6 +284,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -54,9 +295,11 @@ body {
   0% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
+
   100% {
     transform: translateY(0px);
   }
@@ -64,13 +307,15 @@ body {
 
 @keyframes pulse-glow {
   0% {
-    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.4);
+    box-shadow: 0 0 0 0 var(--glow-color);
   }
+
   70% {
-    box-shadow: 0 0 0 15px rgba(45, 212, 191, 0);
+    box-shadow: 0 0 0 15px var(--glow-color-transparent);
   }
+
   100% {
-    box-shadow: 0 0 0 0 rgba(45, 212, 191, 0);
+    box-shadow: 0 0 0 0 var(--glow-color-transparent);
   }
 }
 
