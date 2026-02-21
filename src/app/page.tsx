@@ -149,7 +149,7 @@ export default function Home() {
           <div className="flex items-center gap-5 mb-5 relative z-10">
             <div className="relative">
               <div className="absolute inset-0 bg-teal-400/20 blur-md rounded-2xl animate-pulse-glow"></div>
-              <div className="w-16 h-16 bg-gradient-to-br from-teal-900/50 to-neutral-900 rounded-2xl flex items-center justify-center text-teal-400 backdrop-blur-md border border-teal-500/30 relative z-10 shadow-lg">
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-teal-400 backdrop-blur-md border border-teal-500/30 relative z-10 shadow-lg ${lightMode ? 'bg-gradient-to-br from-teal-100 to-white' : 'bg-gradient-to-br from-teal-900/50 to-neutral-900'}`}>
                 <Activity size={32} strokeWidth={1.5} />
               </div>
             </div>
@@ -168,7 +168,7 @@ export default function Home() {
         {/* Trips List */}
         <div className="flex justify-between items-end mb-6 px-2">
           <h3 className="text-xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-neutral-400">過去の旅の記録</h3>
-          <span className="text-[10px] font-black text-neutral-600 tracking-[0.2em] bg-neutral-900 px-3 py-1 rounded-full border border-neutral-800">HISTORY</span>
+          <span className={`text-[10px] font-black tracking-[0.2em] px-3 py-1 rounded-full border ${lightMode ? 'text-neutral-600 bg-neutral-200/80 border-neutral-300' : 'text-neutral-600 bg-neutral-900 border-neutral-800'}`}>HISTORY</span>
         </div>
 
         <div className="space-y-4">
@@ -215,11 +215,11 @@ export default function Home() {
                     <div className="flex flex-col items-end gap-3">
                       <span className={`text-[10px] px-3 py-1.5 rounded-full font-bold tracking-widest ${trip.status === 'active' ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20 shadow-[0_0_15px_rgba(45,212,191,0.15)]' :
                         trip.status === 'analyzed' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' :
-                          'bg-neutral-800 text-neutral-400 border border-neutral-700'
+                          lightMode ? 'bg-neutral-200/80 text-neutral-600 border border-neutral-300' : 'bg-neutral-800 text-neutral-400 border border-neutral-700'
                         }`}>
                         {trip.status === 'active' ? 'RECORDING' : trip.status === 'analyzed' ? 'ANALYZED' : 'COMPLETED'}
                       </span>
-                      <div className="w-8 h-8 rounded-full bg-neutral-800 group-hover:bg-teal-500/20 flex items-center justify-center transition-colors duration-300">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${lightMode ? 'bg-neutral-200/80 group-hover:bg-teal-500/20' : 'bg-neutral-800 group-hover:bg-teal-500/20'}`}>
                         <ChevronRight className="text-neutral-500 group-hover:text-teal-400 transition-colors w-4 h-4" />
                       </div>
                     </div>
@@ -253,7 +253,7 @@ export default function Home() {
           <div className="absolute top-2 w-20 h-20 bg-gradient-to-tr from-teal-400 via-cyan-300 to-blue-500 rounded-full blur-xl opacity-50 group-hover:opacity-80 group-hover:blur-2xl transition-all duration-500 animate-pulse-glow"></div>
           <button
             onClick={createTrip}
-            className="relative flex items-center justify-center w-[80px] h-[80px] bg-gradient-to-br from-teal-300 via-cyan-400 to-blue-600 rounded-full shadow-[0_20px_40px_rgba(45,212,191,0.5),inset_0_4px_12px_rgba(255,255,255,0.7)] transform transition-all duration-500 group-hover:scale-105 group-active:scale-95 border-[3px] border-[#0a0a0a] overflow-hidden"
+            className={`relative flex items-center justify-center w-[80px] h-[80px] bg-gradient-to-br from-teal-300 via-cyan-400 to-blue-600 rounded-full shadow-[0_20px_40px_rgba(45,212,191,0.5),inset_0_4px_12px_rgba(255,255,255,0.7)] transform transition-all duration-500 group-hover:scale-105 group-active:scale-95 border-[3px] overflow-hidden ${lightMode ? 'border-white/80' : 'border-[#0a0a0a]'}`}
           >
             {/* Shimmer effect inside button */}
             <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
