@@ -84,20 +84,27 @@ export default function Home() {
   )
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white pb-24 font-sans selection:bg-teal-500/30 relative">
-      {/* Background Orbs */}
-      <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-teal-900/10 rounded-full blur-[120px] pointer-events-none animate-float" style={{ animationDelay: '1s' }}></div>
-      <div className="absolute top-[40%] right-[-10%] w-[400px] h-[400px] bg-blue-900/10 rounded-full blur-[100px] pointer-events-none animate-float" style={{ animationDelay: '3s' }}></div>
+    <div className="min-h-screen bg-[#020208] text-white pb-24 font-sans selection:bg-teal-500/30 relative overflow-hidden">
+      {/* === Background: Neon aurora === */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-25%] left-[-15%] w-[700px] h-[700px] bg-gradient-to-br from-blue-600/20 via-purple-600/15 to-transparent rounded-full blur-[160px] animate-breathe" style={{ animationDuration: '8s' }}></div>
+        <div className="absolute top-[50%] right-[-10%] w-[500px] h-[500px] bg-gradient-to-tl from-teal-500/15 via-cyan-500/10 to-transparent rounded-full blur-[140px] animate-breathe" style={{ animationDelay: '3s', animationDuration: '10s' }}></div>
+        <div className="absolute bottom-[-10%] left-[20%] w-[400px] h-[400px] bg-gradient-to-t from-purple-500/10 to-transparent rounded-full blur-[120px] animate-breathe" style={{ animationDelay: '5s', animationDuration: '9s' }}></div>
+        {/* Floating particles */}
+        <div className="absolute top-[20%] left-[10%] w-1.5 h-1.5 bg-teal-400/50 rounded-full animate-antigrav" style={{ animationDuration: '12s' }}></div>
+        <div className="absolute top-[70%] right-[15%] w-1 h-1 bg-purple-400/40 rounded-full animate-antigrav" style={{ animationDuration: '10s', animationDelay: '2s' }}></div>
+        <div className="absolute top-[40%] left-[70%] w-2 h-2 bg-blue-400/30 rounded-full animate-antigrav" style={{ animationDuration: '14s', animationDelay: '4s' }}></div>
+      </div>
 
       {/* Header */}
-      <header className="px-6 py-4 flex justify-between items-center sticky top-0 bg-[#050505]/70 backdrop-blur-2xl z-20 border-b border-white/5 shadow-sm">
+      <header className="px-6 py-4 flex justify-between items-center sticky top-0 glass-frosted z-20 border-b border-white/5">
         <div className="flex flex-col items-start justify-center">
           <Image
             src="/images/Utriprogo.png"
             alt="Utrip"
             width={100}
             height={32}
-            className="object-contain"
+            className="object-contain drop-shadow-[0_0_15px_rgba(20,184,166,0.3)]"
             priority
           />
           <span className="text-[9px] font-black tracking-[0.25em] text-teal-300 ml-1 mt-0.5 uppercase drop-shadow-[0_0_8px_rgba(20,184,166,0.5)]">
@@ -112,7 +119,20 @@ export default function Home() {
         </button>
       </header>
 
-      <main className="p-6 max-w-md mx-auto relative z-10 animate-fade-in-up">
+      <main className="px-6 mt-6 relative z-10">
+        {/* Stats Summary — Floating glass spheres */}
+        <div className="flex gap-4 mb-8">
+          <div className="flex-1 glass-ultra rounded-[2rem] p-5 relative overflow-hidden glass-shimmer animate-antigrav" style={{ animationDuration: '7s' }}>
+            <div className="absolute top-2 right-2 w-8 h-8 glow-sphere opacity-40" style={{ animationDuration: '4s' }}></div>
+            <p className="text-[10px] font-bold text-neutral-500 tracking-widest uppercase mb-1">Total Trips</p>
+            <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-cyan-200">{trips.length}</p>
+          </div>
+          <div className="flex-1 glass-ultra rounded-[2rem] p-5 relative overflow-hidden glass-shimmer animate-antigrav" style={{ animationDuration: '8s', animationDelay: '1s' }}>
+            <div className="absolute top-2 right-2 w-8 h-8 glow-sphere opacity-40" style={{ animationDuration: '5s', background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), rgba(99,102,241,0.4) 40%, transparent 70%)', boxShadow: '0 0 20px rgba(99,102,241,0.3)' }}></div>
+            <p className="text-[10px] font-bold text-neutral-500 tracking-widest uppercase mb-1">Analyzed</p>
+            <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-200">{trips.filter(t => t.status === 'analyzed').length}</p>
+          </div>
+        </div>
         {/* Profile Summary Placeholder */}
         <section className="mb-12 glass-effect-dark rounded-[2rem] p-8 relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-teal-500/20 to-blue-500/20 rounded-full blur-3xl group-hover:bg-teal-500/30 transition-all duration-700"></div>
@@ -146,34 +166,34 @@ export default function Home() {
 
         <div className="space-y-4">
           {trips.length === 0 ? (
-            <div className="text-center py-16 animate-fade-in-up">
-              <div className="relative w-24 h-24 mx-auto mb-6">
-                <div className="absolute inset-0 bg-teal-500/10 rounded-full blur-xl animate-pulse-glow"></div>
-                <div className="relative w-24 h-24 bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl border border-white/10 flex items-center justify-center shadow-2xl">
-                  <MapPin className="text-teal-400 drop-shadow-[0_0_12px_rgba(45,212,191,0.6)]" size={36} strokeWidth={1.5} />
+            <div className="text-center py-16 animate-slide-up-spring">
+              <div className="relative w-24 h-24 mx-auto mb-8">
+                <div className="absolute inset-0 glow-sphere opacity-30" style={{ animationDuration: '4s' }}></div>
+                <div className="relative w-24 h-24 glass-ultra rounded-3xl flex items-center justify-center animate-antigrav" style={{ animationDuration: '6s' }}>
+                  <MapPin className="text-teal-400 drop-shadow-[0_0_15px_rgba(45,212,191,0.6)]" size={36} strokeWidth={1.5} />
                 </div>
               </div>
               <h3 className="text-xl font-black text-white mb-2 tracking-tight">まだ旅の記録がありません</h3>
               <p className="text-sm text-neutral-500 leading-relaxed max-w-[240px] mx-auto mb-8">下の「旅をする」ボタンから<br />新しい冒険を始めましょう！</p>
-              <div className="flex justify-center gap-6 text-xs text-neutral-600">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center"><MapPin size={16} className="text-teal-400" /></div>
-                  <span>記録</span>
+              <div className="flex justify-center gap-8">
+                <div className="flex flex-col items-center gap-2 animate-antigrav" style={{ animationDuration: '7s' }}>
+                  <div className="w-12 h-12 glow-sphere opacity-50"></div>
+                  <span className="text-[10px] text-neutral-600 font-bold tracking-widest">記録</span>
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center"><Activity size={16} className="text-blue-400" /></div>
-                  <span>分析</span>
+                <div className="flex flex-col items-center gap-2 animate-antigrav" style={{ animationDuration: '8s', animationDelay: '0.5s' }}>
+                  <div className="w-14 h-14 glow-sphere opacity-60" style={{ background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), rgba(99,102,241,0.4) 40%, transparent 70%)', boxShadow: '0 0 30px rgba(99,102,241,0.3)' }}></div>
+                  <span className="text-[10px] text-neutral-600 font-bold tracking-widest">分析</span>
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center"><Sparkles size={16} className="text-purple-400" /></div>
-                  <span>発見</span>
+                <div className="flex flex-col items-center gap-2 animate-antigrav" style={{ animationDuration: '9s', animationDelay: '1s' }}>
+                  <div className="w-12 h-12 glow-sphere opacity-50" style={{ background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), rgba(168,85,247,0.4) 40%, transparent 70%)', boxShadow: '0 0 30px rgba(168,85,247,0.3)' }}></div>
+                  <span className="text-[10px] text-neutral-600 font-bold tracking-widest">発見</span>
                 </div>
               </div>
             </div>
           ) : (
             trips.map((trip, idx) => (
-              <Link href={`/trips/${trip.id}`} key={trip.id} className="block group animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s` }}>
-                <div className="glass-effect p-6 rounded-3xl transition-all duration-500 relative overflow-hidden hover:scale-[1.02] hover:bg-white/[0.05] hover:border-teal-500/30 hover:shadow-[0_10px_40px_-10px_rgba(45,212,191,0.2)]">
+              <Link href={`/trips/${trip.id}`} key={trip.id} className="block group" style={{ animationDelay: `${idx * 0.1}s` }}>
+                <div className="glass-ultra p-6 rounded-[2rem] transition-all duration-500 relative overflow-hidden hover:scale-[1.02] hover:border-teal-500/20 hover:shadow-[0_10px_50px_-10px_rgba(45,212,191,0.15)] glass-shimmer animate-slide-up-spring" style={{ animationDelay: `${idx * 0.08}s` }}>
                   {/* Subtle hover gradient */}
                   <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/0 to-teal-500/0 group-hover:from-teal-500/5 group-hover:via-transparent group-hover:to-blue-500/5 transition-all duration-500"></div>
 
@@ -207,8 +227,8 @@ export default function Home() {
       {/* Bottom Navigation Space */}
       <div className="h-32"></div>
 
-      {/* App-like Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#050505]/80 backdrop-blur-3xl border-t border-white/5 pt-2 px-6 flex justify-around items-center h-[90px] shadow-[0_-15px_40px_rgba(0,0,0,0.8)] pb-safe lg:rounded-t-[2.5rem] lg:w-full lg:max-w-md lg:mx-auto">
+      {/* App-like Bottom Navigation — glass frosted */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 glass-frosted pt-2 px-6 flex justify-around items-center h-[90px] pb-safe lg:rounded-t-[2.5rem] lg:w-full lg:max-w-md lg:mx-auto">
 
         {/* Nav Item: Home */}
         <button className="flex flex-col items-center gap-1.5 text-teal-400 group relative mb-2">

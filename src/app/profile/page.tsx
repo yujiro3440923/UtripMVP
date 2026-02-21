@@ -137,11 +137,17 @@ export default function ProfilePage() {
     const rank = getRank(stats.tripCount)
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white pb-32 font-sans selection:bg-t-primary-500/30 relative">
-            <div className="fixed inset-0 bg-gradient-to-tr from-[#050505] via-[#0a0a0a] to-t-primary-950/20 z-0 pointer-events-none"></div>
+        <div className="min-h-screen bg-[#020208] text-white pb-32 font-sans selection:bg-t-primary-500/30 relative overflow-hidden">
+            {/* Background aurora */}
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-gradient-to-bl from-blue-600/15 via-purple-600/10 to-transparent rounded-full blur-[160px] animate-breathe" style={{ animationDuration: '8s' }}></div>
+                <div className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] bg-gradient-to-tr from-teal-500/10 via-cyan-500/8 to-transparent rounded-full blur-[140px] animate-breathe" style={{ animationDelay: '3s', animationDuration: '10s' }}></div>
+                <div className="absolute top-[30%] left-[5%] w-1.5 h-1.5 bg-teal-400/40 rounded-full animate-antigrav" style={{ animationDuration: '11s' }}></div>
+                <div className="absolute top-[60%] right-[10%] w-1 h-1 bg-purple-400/30 rounded-full animate-antigrav" style={{ animationDuration: '13s', animationDelay: '2s' }}></div>
+            </div>
 
             {/* Header */}
-            <header className="px-6 py-5 flex items-center gap-4 sticky top-0 bg-[#050505]/70 backdrop-blur-2xl z-20 border-b border-white/5">
+            <header className="px-6 py-5 flex items-center gap-4 sticky top-0 glass-frosted z-20 border-b border-white/5">
                 <button onClick={() => router.push('/')} className="p-2.5 text-neutral-400 hover:text-white glass-effect rounded-full transition-all">
                     <ArrowLeft size={20} />
                 </button>
@@ -151,10 +157,10 @@ export default function ProfilePage() {
             <main className="p-6 max-w-md mx-auto relative z-10 space-y-8 animate-fade-in-up">
 
                 {/* User Identity Section */}
-                <section className="glass-effect-dark rounded-[2.5rem] p-8 relative overflow-hidden text-center">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-t-primary-500/10 rounded-full blur-2xl"></div>
+                <section className="glass-ultra rounded-[2.5rem] p-8 relative overflow-hidden text-center glass-shimmer animate-slide-up-spring">
+                    <div className="absolute top-0 right-0 w-32 h-32 glow-sphere opacity-15" style={{ animationDuration: '5s' }}></div>
 
-                    <div className="w-24 h-24 mx-auto bg-gradient-to-br from-t-primary-800 to-neutral-800 rounded-3xl flex items-center justify-center shadow-2xl border border-white/10 relative mb-6">
+                    <div className="w-24 h-24 mx-auto glass-ultra rounded-3xl flex items-center justify-center shadow-2xl relative mb-6 animate-antigrav" style={{ animationDuration: '7s' }}>
                         <UserIcon size={40} className="text-t-primary-300 drop-shadow-[0_0_15px_rgba(var(--color-t-primary-400),0.5)]" />
                         <div className="absolute -bottom-2 -right-2 bg-neutral-900 rounded-full p-2 border border-white/10 shadow-lg">
                             <Award size={16} className={rank.color} />
@@ -301,7 +307,7 @@ export default function ProfilePage() {
             </main>
 
             {/* App-like Bottom Navigation */}
-            <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#050505]/80 backdrop-blur-3xl border-t border-white/5 pt-2 px-6 flex justify-around items-center h-[90px] shadow-[0_-15px_40px_rgba(0,0,0,0.8)] pb-safe lg:rounded-t-[2.5rem] lg:w-full lg:max-w-md lg:mx-auto">
+            <nav className="fixed bottom-0 left-0 right-0 z-40 glass-frosted pt-2 px-6 flex justify-around items-center h-[90px] pb-safe lg:rounded-t-[2.5rem] lg:w-full lg:max-w-md lg:mx-auto">
                 <Link href="/" className="flex flex-col items-center gap-1.5 text-neutral-500 hover:text-neutral-300 transition-colors group mb-2">
                     <div className="p-2 rounded-2xl group-hover:bg-white/5 transition-all duration-300">
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
