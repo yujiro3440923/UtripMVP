@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { analyzeTripData, TraitAnalysisResult } from '@/lib/analysis/traitAnalyzer'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts'
-import { ArrowLeft, Sparkles, AlertCircle, Briefcase, Heart, Building, TrendingUp } from 'lucide-react'
+import { ArrowLeft, Sparkles, AlertCircle, Briefcase, Heart, Building, TrendingUp, Share2 } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 
 export default function ResultPage() {
     const params = useParams()
@@ -261,6 +262,29 @@ export default function ResultPage() {
 
             {/* Bottom padding to prevent FAB overlap if added later */}
             <div className="h-10"></div>
+
+            {/* Share FAB */}
+            {traits && (
+                <button
+                    onClick={async () => {
+                        const shareText = `Utripで自分のキャリア特性を分析しました！\n\n` +
+                            `没入トリガー: ${traits.immersion_triggers.primary}\n` +
+                            `探索スタイル: ${traits.exploration_score > 0.6 ? '広く探索する派' : '深く掘り下げる派'}\n\n` +
+                            `#Utrip #キャリア分析`
+                        if (navigator.share) {
+                            try {
+                                await navigator.share({ title: 'Utrip - キャリア特性プロファイル', text: shareText })
+                            } catch (e) { /* user cancelled */ }
+                        } else {
+                            await navigator.clipboard.writeText(shareText)
+                            toast.success('クリップボードにコピーしました')
+                        }
+                    }}
+                    className="fixed bottom-8 right-6 z-30 w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(168,85,247,0.5)] hover:scale-110 active:scale-95 transition-all"
+                >
+                    <Share2 size={22} className="text-white" />
+                </button>
+            )}
         </div>
     )
 }

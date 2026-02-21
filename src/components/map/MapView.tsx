@@ -63,12 +63,24 @@ export default function MapView({ currentPosition, path }: MapViewProps) {
                 )}
 
                 {path.length > 1 && (
-                    <Polyline
-                        positions={path}
-                        color="#14b8a6" // teal-500
-                        weight={4}
-                        opacity={0.8}
-                    />
+                    <>
+                        {/* Glow effect */}
+                        <Polyline
+                            positions={path}
+                            color="#2dd4bf" // teal-400
+                            weight={12}
+                            opacity={0.25}
+                        />
+                        {/* Main line */}
+                        <Polyline
+                            positions={path}
+                            color="#14b8a6" // teal-500
+                            weight={4}
+                            opacity={0.9}
+                            dashArray="1, 8"
+                            lineCap="round"
+                        />
+                    </>
                 )}
 
                 {currentPosition && <MapUpdater center={currentPosition} />}

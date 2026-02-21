@@ -16,8 +16,11 @@ export function useGpsRecorder(tripId: string, isActive: boolean) {
     const [error, setError] = useState<string | null>(null)
 
     const watchIdRef = useRef<number | null>(null)
-    const lastRecordedTimeRef = useRef<number>(0)
-    const RECORD_INTERVAL_MS = 30000 // 30 seconds
+    const lastDbTimeRef = useRef<number>(0)
+    const lastPathTimeRef = useRef<number>(0)
+
+    const DB_RECORD_INTERVAL_MS = 15000 // 15 seconds for DB
+    const PATH_UPDATE_INTERVAL_MS = 3000 // 3 seconds for UI
 
     // Load existing path from local DB
     useEffect(() => {
@@ -68,13 +71,16 @@ export function useGpsRecorder(tripId: string, isActive: boolean) {
             // Update current position immediately for responsive UI
             setCurrentPosition([latitude, longitude])
 
-            // Only record to DB and Path array every RECORD_INTERVAL_MS
-            if (now - lastRecordedTimeRef.current >= RECORD_INTERVAL_MS) {
-                lastRecordedTimeRef.current = now
-                const timestamp = new Date(now)
-
-                // 1. Update Map Path
+            // Update UI path more frequently
+            if (now - lastPathTimeRef.current >= PATH_UPDATE_INTERVAL_MS) {
+                lastPathTimeRef.current = now
                 setPath(prev => [...prev, [latitude, longitude]])
+            }
+
+            // Record to DB less frequently
+            if (now - lastDbTimeRef.current >= DB_RECORD_INTERVAL_MS) {
+                lastDbTimeRef.current = now
+                const timestamp = new Date(now)
 
                 try {
                     // 2. Save to Local IndexedDB (Dexie)

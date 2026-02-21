@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { X } from 'lucide-react'
 import { supabase } from '@/lib/supabase/client'
+import { toast } from 'react-hot-toast'
 
 const EXPERIENCE_TAGS = [
     { id: 'nature', label: '🌿 自然・アウトドア' },
@@ -48,7 +49,7 @@ export default function MoodInputModal({ isOpen, onClose, tripId, currentPositio
 
     const handleSubmit = async () => {
         if (!currentPosition) {
-            alert('現在地が取得できていないため記録できません。')
+            toast.error('現在地が取得できていないため記録できません。')
             return
         }
 
@@ -80,12 +81,14 @@ export default function MoodInputModal({ isOpen, onClose, tripId, currentPositio
             setCompanion('')
             setNote('')
             onClose()
+            toast.success('状態を記録しました！')
 
         } catch (error: unknown) {
+            console.error(error)
             if (error instanceof Error) {
-                alert('保存に失敗しました: ' + error.message)
+                toast.error('保存に失敗しました: ' + error.message)
             } else {
-                alert('保存に失敗しました。')
+                toast.error('保存に失敗しました。')
             }
         } finally {
             setIsSubmitting(false)

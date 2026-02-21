@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { toast } from 'react-hot-toast'
 import Image from 'next/image'
-import { LogOut, Plus, MapPin, Activity, ChevronRight } from 'lucide-react'
+import { LogOut, Plus, MapPin, Activity, ChevronRight, Sparkles } from 'lucide-react'
 import type { User } from '@supabase/supabase-js'
 
 interface Trip {
@@ -72,7 +73,7 @@ export default function Home() {
     if (data && data.length > 0) {
       router.push(`/trips/${data[0].id}`)
     } else if (error) {
-      alert('エラーが発生しました: ' + error.message)
+      toast.error('エラーが発生しました: ' + error.message)
     }
   }
 
@@ -145,12 +146,29 @@ export default function Home() {
 
         <div className="space-y-4">
           {trips.length === 0 ? (
-            <div className="text-center p-12 glass-effect rounded-[2rem] flex flex-col items-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-full flex items-center justify-center mb-6 shadow-inner border border-white/5">
-                <MapPin className="text-neutral-500" size={32} strokeWidth={1.5} />
+            <div className="text-center py-16 animate-fade-in-up">
+              <div className="relative w-24 h-24 mx-auto mb-6">
+                <div className="absolute inset-0 bg-teal-500/10 rounded-full blur-xl animate-pulse-glow"></div>
+                <div className="relative w-24 h-24 bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl border border-white/10 flex items-center justify-center shadow-2xl">
+                  <MapPin className="text-teal-400 drop-shadow-[0_0_12px_rgba(45,212,191,0.6)]" size={36} strokeWidth={1.5} />
+                </div>
               </div>
-              <p className="text-neutral-300 font-medium text-lg">まだ記録がありません</p>
-              <p className="text-sm text-neutral-500 mt-2 leading-relaxed">右下のボタンから<br />新しい旅行を始めましょう</p>
+              <h3 className="text-xl font-black text-white mb-2 tracking-tight">まだ旅の記録がありません</h3>
+              <p className="text-sm text-neutral-500 leading-relaxed max-w-[240px] mx-auto mb-8">下の「旅をする」ボタンから<br />新しい冒険を始めましょう！</p>
+              <div className="flex justify-center gap-6 text-xs text-neutral-600">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-10 h-10 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center"><MapPin size={16} className="text-teal-400" /></div>
+                  <span>記録</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center"><Activity size={16} className="text-blue-400" /></div>
+                  <span>分析</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center"><Sparkles size={16} className="text-purple-400" /></div>
+                  <span>発見</span>
+                </div>
+              </div>
             </div>
           ) : (
             trips.map((trip, idx) => (
@@ -220,14 +238,14 @@ export default function Home() {
         </div>
 
         {/* Nav Item: Profile / Settings */}
-        <button className="flex flex-col items-center gap-1.5 text-neutral-500 hover:text-neutral-300 transition-colors group mb-2">
+        <Link href="/profile" className="flex flex-col items-center gap-1.5 text-neutral-500 hover:text-neutral-300 transition-colors group mb-2">
           <div className="p-2 rounded-2xl group-hover:bg-white/5 transition-all duration-300">
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
           <span className="text-[10px] font-bold tracking-widest uppercase">Profile</span>
-        </button>
+        </Link>
 
       </nav>
     </div>

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { supabase } from '@/lib/supabase/client'
 import { useState } from 'react'
 import { Activity } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false)
@@ -26,9 +27,9 @@ export default function LoginPage() {
             if (error) throw error
         } catch (error: unknown) {
             if (error instanceof Error) {
-                alert(error.message)
+                toast.error(error.message)
             } else {
-                alert('ログイン中にエラーが発生しました。')
+                toast.error('ログイン中にエラーが発生しました。')
             }
         } finally {
             setLoading(false)

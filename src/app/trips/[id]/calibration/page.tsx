@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { detectStaySpots, DetectedSpot, GpsDataPoint } from '@/lib/analysis/spotDetector'
+import { toast } from 'react-hot-toast'
 // lib/db/dexie.ts はクライアントサイドのみ
 import { db } from '@/lib/db/dexie'
 import { ArrowLeft, Clock, MapPin, CheckCircle2, ChevronRight, Loader2 } from 'lucide-react'
@@ -116,15 +117,18 @@ export default function CalibrationPage() {
                 }
             }
 
+            toast.success('キャリブレーションを保存しました')
             // 結果画面へ遷移
             router.push(`/trips/${tripId}/result`)
 
         } catch (error: unknown) {
+            console.error(error)
             if (error instanceof Error) {
-                alert('保存に失敗しました: ' + error.message)
+                toast.error('保存に失敗しました: ' + error.message)
             } else {
-                alert('保存に失敗しました。')
+                toast.error('保存に失敗しました。')
             }
+        } finally {
             setIsSubmitting(false)
         }
     }

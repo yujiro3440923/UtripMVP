@@ -5,8 +5,9 @@ import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { User } from '@supabase/supabase-js'
-import { ArrowLeft, User as UserIcon, Award, Settings, Palette, Edit2, Check, Sparkles, Navigation, Lock } from 'lucide-react'
+import { ArrowLeft, User as UserIcon, Award, Settings, Palette, Edit2, Check, Sparkles, Navigation, Lock, Share2 } from 'lucide-react'
 import { useTheme } from '@/providers/ThemeProvider'
+import { toast } from 'react-hot-toast'
 
 interface UserStats {
     tripCount: number
@@ -111,8 +112,9 @@ export default function ProfilePage() {
         if (!error) {
             setUser(prev => prev ? { ...prev, user_metadata: { ...prev.user_metadata, name: editName } } : null)
             setIsEditingName(false)
+            toast.success('名前を更新しました')
         } else {
-            alert('名前の更新に失敗しました')
+            toast.error('名前の更新に失敗しました')
         }
         setUpdatingName(false)
     }
@@ -269,6 +271,31 @@ export default function ProfilePage() {
                             ))}
                         </div>
                     </div>
+                </section>
+
+                {/* Share Profile */}
+                <section>
+                    <button
+                        onClick={async () => {
+                            const shareText = `Utripで旅の記録を始めてみました！\n\n` +
+                                `ランク: ${rank.title}\n` +
+                                `旅行回数: ${stats.tripCount}回\n` +
+                                (insight && !insight.isLocked ? `タイプ: ${insight.type}\n` : '') +
+                                `\n#Utrip #旅行記録`
+                            if (navigator.share) {
+                                try {
+                                    await navigator.share({ title: 'Utrip - マイプロフィール', text: shareText })
+                                } catch (e) { /* user cancelled */ }
+                            } else {
+                                await navigator.clipboard.writeText(shareText)
+                                toast.success('クリップボードにコピーしました')
+                            }
+                        }}
+                        className="w-full glass-effect rounded-2xl p-5 flex items-center justify-center gap-3 text-neutral-400 hover:text-white hover:border-t-primary-500/30 transition-all group"
+                    >
+                        <Share2 size={18} className="group-hover:text-t-primary-400 transition-colors" />
+                        <span className="text-sm font-bold tracking-wide">プロフィールをシェア</span>
+                    </button>
                 </section>
 
             </main>
