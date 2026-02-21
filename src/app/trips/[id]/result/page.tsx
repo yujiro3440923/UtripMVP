@@ -7,6 +7,7 @@ import { analyzeTripData, TraitAnalysisResult } from '@/lib/analysis/traitAnalyz
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts'
 import { ArrowLeft, Sparkles, AlertCircle, Briefcase, Heart, Building, TrendingUp, Share2, BookOpen, MapPin, Footprints, Compass } from 'lucide-react'
 import { toast } from 'react-hot-toast'
+import { useTheme } from '@/providers/ThemeProvider'
 
 export default function ResultPage() {
     const params = useParams()
@@ -20,6 +21,9 @@ export default function ResultPage() {
     const [error, setError] = useState<string | null>(null)
     const [diary, setDiary] = useState<{ text: string; date: string; metrics: Record<string, any> } | null>(null)
     const [diaryLoading, setDiaryLoading] = useState(false)
+    const { lightMode } = useTheme()
+    const [spots, setSpots] = useState<any[]>([])
+    const [points, setPoints] = useState<any[]>([])
 
     useEffect(() => {
         const runAnalysis = async () => {
@@ -33,6 +37,8 @@ export default function ResultPage() {
 
                 const spots = spotsRes.data || []
                 const points = pointsRes.data || []
+                setSpots(spots)
+                setPoints(points)
 
                 setAnalysisState('6軸特性プロファイルの生成中...')
                 // 2. Run Trait Analysis
@@ -113,12 +119,15 @@ export default function ResultPage() {
     ]
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white pb-32 relative font-sans selection:bg-teal-500/30">
-            {/* Animated Background Gradients */}
-            <div className="fixed inset-0 bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-blue-950/20 z-0 pointer-events-none"></div>
+        <div className={`min-h-screen ${lightMode ? 'bg-[#f5f5f9]' : 'bg-[#050505]'} text-[var(--foreground)] pb-32 relative font-sans selection:bg-teal-500/30`}>
+            {/* Animated Background */}
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <div className={`absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full blur-[160px] animate-breathe ${lightMode ? 'bg-gradient-to-br from-blue-300/15 via-purple-300/10 to-transparent' : 'bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-transparent'}`} style={{ animationDuration: '8s' }}></div>
+                <div className={`absolute bottom-[-15%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[140px] animate-breathe ${lightMode ? 'bg-gradient-to-tl from-teal-300/10 via-cyan-300/8 to-transparent' : 'bg-gradient-to-tl from-teal-500/10 via-cyan-500/8 to-transparent'}`} style={{ animationDelay: '3s', animationDuration: '10s' }}></div>
+            </div>
 
             {/* Header */}
-            <header className="sticky top-0 bg-[#050505]/70 backdrop-blur-2xl z-20 border-b border-white/5 p-4 flex items-center justify-between shadow-sm">
+            <header className="sticky top-0 glass-frosted z-20 border-b border-white/5 p-4 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <button onClick={() => router.push('/')} className="p-2.5 text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-all duration-300">
                         <ArrowLeft size={20} />
@@ -277,24 +286,53 @@ export default function ResultPage() {
                             onClick={async () => {
                                 setDiaryLoading(true)
                                 try {
+                                    // Calculate metrics client-side
+                                    let totalDistanceKm = 0
+                                    for (let i = 1; i < points.length; i++) {
+                                        const prev = points[i - 1]
+                                        const curr = points[i]
+                                        const R = 6371
+                                        const dLat = (curr.lat - prev.lat) * Math.PI / 180
+                                        const dLon = (curr.lng - prev.lng) * Math.PI / 180
+                                        const a = Math.sin(dLat / 2) ** 2 + Math.cos(prev.lat * Math.PI / 180) * Math.cos(curr.lat * Math.PI / 180) * Math.sin(dLon / 2) ** 2
+                                        totalDistanceKm += R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+                                    }
+                                    const tripDate = points.length > 0 ? new Date(points[0].timestamp).toLocaleDateString('ja-JP') : new Date().toLocaleDateString('ja-JP')
+                                    const activityScore = Math.min(100, Math.round(totalDistanceKm * 8 + spots.length * 10))
+                                    const explorationRate = traits?.exploration_score || 0.5
+                                    const totalDwell = spots.reduce((sum: number, s: any) => sum + (s.duration_minutes || 0), 0)
+                                    const maxDwell = spots.length > 0 ? Math.max(...spots.map((s: any) => s.duration_minutes || 0)) : 0
+                                    const dwellTendency = totalDwell > 0 ? maxDwell / totalDwell : 0
+
                                     const res = await fetch('/api/diary-generate', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ tripId })
+                                        body: JSON.stringify({
+                                            tripData: {
+                                                date: tripDate,
+                                                distanceKm: totalDistanceKm,
+                                                spotsCount: spots.length,
+                                                activityScore,
+                                                explorationRate,
+                                                dwellTendency,
+                                                diversityScore: spots.length > 0 ? Math.min(1, spots.length / 3) : 0
+                                            }
+                                        })
                                     })
                                     const data = await res.json()
                                     if (data.success) {
                                         setDiary(data.diary)
                                     } else {
-                                        toast.error('日記の生成に失敗しました')
+                                        toast.error('日記の生成に失敗しました: ' + (data.error || ''))
                                     }
-                                } catch {
+                                } catch (e) {
+                                    console.error(e)
                                     toast.error('日記の生成に失敗しました')
                                 } finally {
                                     setDiaryLoading(false)
                                 }
                             }}
-                            className="w-full glass-ultra rounded-[2rem] p-8 text-center group hover:scale-[1.01] transition-all duration-300 hover:border-amber-500/20 hover:shadow-[0_10px_40px_-10px_rgba(245,158,11,0.15)] relative overflow-hidden glass-shimmer"
+                            className={`w-full glass-ultra rounded-[2rem] p-8 text-center group hover:scale-[1.01] transition-all duration-300 hover:border-amber-500/20 hover:shadow-[0_10px_40px_-10px_rgba(245,158,11,0.15)] relative overflow-hidden glass-shimmer`}
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/5 to-amber-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="w-16 h-16 mx-auto mb-4 glow-sphere opacity-40 animate-antigrav" style={{ animationDuration: '6s', background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), rgba(245,158,11,0.4) 40%, transparent 70%)', boxShadow: '0 0 30px rgba(245,158,11,0.3)' }}></div>
