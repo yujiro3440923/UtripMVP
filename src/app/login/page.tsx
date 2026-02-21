@@ -30,32 +30,47 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-neutral-900 text-white flex flex-col justify-center items-center p-6 relative overflow-hidden">
-            {/* Background decorations */}
-            <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="min-h-screen bg-[#050505] text-white flex flex-col justify-center items-center p-6 relative overflow-hidden font-sans">
+            {/* Animated Background Gradients */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-teal-900/30 via-[#050505] to-blue-900/40 animate-gradient-xy z-0"></div>
 
-            <div className="max-w-md w-full bg-neutral-800/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-neutral-700/50 z-10">
-                <div className="flex justify-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg shadow-teal-500/30">
-                        <Activity className="text-neutral-900 w-8 h-8" />
+            {/* Floating Orbs */}
+            <div className="absolute top-[10%] left-[10%] w-96 h-96 bg-teal-500/20 rounded-full blur-[100px] pointer-events-none animate-float" style={{ animationDelay: '0s' }}></div>
+            <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none animate-float" style={{ animationDelay: '2s' }}></div>
+
+            <div className="glass-effect-dark max-w-md w-full p-10 rounded-[2.5rem] z-10 animate-fade-in-up">
+                <div className="flex justify-center mb-8 relative">
+                    <div className="absolute inset-0 bg-teal-400/20 blur-xl rounded-full animate-pulse-glow"></div>
+                    <div className="w-20 h-20 bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center shadow-2xl relative z-10 animate-float" style={{ animationDuration: '4s' }}>
+                        <Activity className="text-white w-10 h-10" strokeWidth={2.5} />
                     </div>
                 </div>
-                <h1 className="text-4xl font-black mb-3 text-center bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-blue-400">Utrip</h1>
-                <p className="text-neutral-400 text-center mb-10 font-medium">旅行体験から、あなたの「キャリアの原石」を見つける</p>
+
+                <h1 className="text-5xl font-black mb-4 text-center tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-teal-100 to-blue-200 drop-shadow-sm">
+                    Utrip
+                </h1>
+
+                <p className="text-neutral-400 text-center mb-12 font-medium leading-relaxed">
+                    旅行体験から、あなたの<br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400 font-bold">「キャリアの原石」</span>を見つける
+                </p>
 
                 <button
                     onClick={handleGoogleLogin}
                     disabled={loading}
-                    className="w-full bg-white text-neutral-900 font-bold py-4 px-4 rounded-xl flex items-center justify-center gap-3 hover:bg-neutral-100 transition-all duration-300 disabled:opacity-70 hover:scale-[1.02] shadow-lg"
+                    className="group w-full relative overflow-hidden bg-white text-neutral-900 font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-4 transition-all duration-500 disabled:opacity-50 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(45,212,191,0.3)] active:scale-95"
                 >
-                    <Image src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width={20} height={20} />
-                    {loading ? '読み込み中...' : 'Googleでログイン'}
+                    <div className="absolute inset-0 bg-gradient-to-r from-white via-neutral-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <Image src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width={24} height={24} className="relative z-10" />
+                    <span className="relative z-10 text-lg tracking-wide">{loading ? '認証中...' : 'Googleでログイン'}</span>
                 </button>
 
-                <p className="text-xs text-center text-neutral-500 mt-8">
-                    ログインすることで、利用規約およびプライバシーポリシーに同意したものとみなされます。
-                </p>
+                <div className="mt-10 overflow-hidden relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-700 to-transparent h-[1px] top-0"></div>
+                    <p className="text-[11px] text-center text-neutral-500 pt-6 leading-relaxed">
+                        ログインすることで、利用規約および<br />プライバシーポリシーに同意したものとみなされます。
+                    </p>
+                </div>
             </div>
         </div>
     )

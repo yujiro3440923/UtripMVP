@@ -69,23 +69,33 @@ export default function ResultPage() {
 
 
     if (loading) return (
-        <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center p-6 text-center">
-            <div className="relative w-24 h-24 mb-8">
-                <div className="absolute inset-0 border-4 border-neutral-800 rounded-full"></div>
-                <div className="absolute inset-0 border-4 border-teal-500 rounded-full border-t-transparent animate-spin"></div>
-                <Sparkles className="absolute inset-0 m-auto text-teal-400 animate-pulse" size={32} />
+        <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center p-6 text-center relative overflow-hidden text-white">
+            <div className="absolute inset-0 bg-gradient-to-tr from-teal-900/20 via-[#050505] to-purple-900/20 animate-gradient-xy z-0"></div>
+
+            <div className="relative z-10 glass-effect-dark p-12 rounded-[3rem] flex flex-col items-center animate-fade-in-up border border-white/5 shadow-2xl">
+                <div className="relative w-28 h-28 mb-10">
+                    <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-2xl animate-pulse-glow"></div>
+                    <div className="absolute inset-0 border-[3px] border-neutral-800 rounded-full"></div>
+                    <div className="absolute inset-0 border-[3px] border-teal-400 rounded-full border-t-transparent animate-spin" style={{ animationDuration: '1.5s' }}></div>
+                    <div className="absolute inset-0 border-[3px] border-purple-500 rounded-full border-b-transparent animate-spin mix-blend-screen" style={{ animationDuration: '2s', animationDirection: 'reverse' }}></div>
+                    <Sparkles className="absolute inset-0 m-auto text-teal-300 animate-pulse drop-shadow-[0_0_15px_rgba(45,212,191,0.8)]" size={36} />
+                </div>
+                <h2 className="text-2xl font-black mb-3 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-teal-100 to-gray-300">プロファイルを解析中...</h2>
+                <p className="text-teal-400 font-bold tracking-widest text-sm animate-pulse">{analysisState}</p>
             </div>
-            <h2 className="text-xl font-bold text-white mb-2">プロファイルを解析中...</h2>
-            <p className="text-teal-400 font-medium animate-pulse">{analysisState}</p>
         </div>
     )
 
     if (error) return (
-        <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center p-6 text-center">
-            <AlertCircle className="w-16 h-16 text-red-500 mb-4" />
-            <h2 className="text-xl font-bold text-white mb-2">エラーが発生しました</h2>
-            <p className="text-neutral-400 mb-6">{error}</p>
-            <button onClick={() => router.push('/')} className="px-6 py-2 bg-neutral-800 rounded-full">ホームに戻る</button>
+        <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center p-6 text-center">
+            <div className="glass-effect-dark p-10 rounded-[2.5rem] flex flex-col items-center max-w-sm w-full animate-fade-in-up border border-red-500/20 shadow-[0_20px_60px_-15px_rgba(239,68,68,0.2)]">
+                <div className="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
+                    <AlertCircle className="w-10 h-10 text-red-500" />
+                </div>
+                <h2 className="text-xl font-bold text-white mb-3">エラーが発生しました</h2>
+                <p className="text-neutral-400 mb-8 max-w-[250px] leading-relaxed text-sm">{error}</p>
+                <button onClick={() => router.push('/')} className="w-full py-4.5 bg-white text-neutral-900 font-bold rounded-2xl hover:bg-neutral-200 transition-colors shadow-lg active:scale-95">ホームに戻る</button>
+            </div>
         </div>
     )
 
@@ -100,77 +110,99 @@ export default function ResultPage() {
     ]
 
     return (
-        <div className="min-h-screen bg-neutral-950 text-white pb-24 selection:bg-teal-500/30">
+        <div className="min-h-screen bg-[#050505] text-white pb-32 relative font-sans selection:bg-teal-500/30">
+            {/* Animated Background Gradients */}
+            <div className="fixed inset-0 bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-blue-950/20 z-0 pointer-events-none"></div>
+
             {/* Header */}
-            <header className="sticky top-0 bg-neutral-950/80 backdrop-blur-xl z-20 border-b border-white/5 p-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <button onClick={() => router.push('/')} className="p-2 text-neutral-400 hover:text-white bg-white/5 rounded-full">
-                        <ArrowLeft size={18} />
+            <header className="sticky top-0 bg-[#050505]/70 backdrop-blur-2xl z-20 border-b border-white/5 p-4 flex items-center justify-between shadow-sm">
+                <div className="flex items-center gap-4">
+                    <button onClick={() => router.push('/')} className="p-2.5 text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-all duration-300">
+                        <ArrowLeft size={20} />
                     </button>
-                    <h1 className="font-bold text-lg">分析結果</h1>
+                    <h1 className="font-bold text-lg tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">分析結果</h1>
                 </div>
-                <div className="bg-teal-500/10 text-teal-400 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-                    <Sparkles size={12} /> AI Analyzed
+                <div className="bg-teal-500/10 border border-teal-500/20 text-teal-300 px-3.5 py-1.5 rounded-full text-[10px] tracking-widest font-black flex items-center gap-1.5 shadow-[0_0_15px_rgba(45,212,191,0.1)]">
+                    <Sparkles size={12} className="text-teal-400" /> AI ANALYZED
                 </div>
             </header>
 
-            <main className="max-w-xl mx-auto p-6 space-y-10">
+            <main className="max-w-xl mx-auto p-6 space-y-12 relative z-10">
 
                 {/* Section 1: 6軸レーダーチャート */}
-                <section className="bg-gradient-to-br from-neutral-900 to-neutral-800/50 rounded-3xl p-6 border border-white/10 shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl"></div>
+                <section className="glass-effect-dark rounded-[2.5rem] p-8 relative overflow-hidden animate-fade-in-up">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-teal-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse-glow"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
 
-                    <h2 className="text-xl font-black mb-1 flex items-center gap-2 relative z-10">あなたのキャリア特性</h2>
-                    <p className="text-xs text-neutral-400 font-medium mb-6 relative z-10">旅行での行動パターンから抽出された6つの基礎特性</p>
+                    <h2 className="text-2xl font-black mb-1.5 flex items-center gap-3 relative z-10 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">
+                        あなたのキャリア特性
+                    </h2>
+                    <p className="text-[11px] text-teal-400/80 font-bold tracking-widest uppercase mb-8 relative z-10">
+                        旅行行動から抽出された6つの基礎特性
+                    </p>
 
-                    <div className="h-64 w-full relative z-10 -ml-2 mb-4">
+                    <div className="h-72 w-full relative z-10 -ml-2 mb-6">
                         <ResponsiveContainer width="100%" height="100%">
-                            <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
-                                <PolarGrid stroke="#333" />
-                                <PolarAngleAxis dataKey="subject" tick={{ fill: '#888', fontSize: 11, fontWeight: 'bold' }} />
+                            <RadarChart cx="50%" cy="50%" outerRadius="65%" data={radarData}>
+                                <PolarGrid stroke="rgba(255,255,255,0.05)" />
+                                <PolarAngleAxis dataKey="subject" tick={{ fill: '#a3a3a3', fontSize: 11, fontWeight: 'bold' }} stroke="none" />
                                 <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-                                <Radar name="本人" dataKey="A" stroke="#14b8a6" strokeWidth={3} fill="#14b8a6" fillOpacity={0.3} />
+                                <Radar name="本人" dataKey="A" stroke="#14b8a6" strokeWidth={3} fill="url(#colorTeal)" fillOpacity={1} />
+                                <defs>
+                                    <linearGradient id="colorTeal" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#14b8a6" stopOpacity={0.4} />
+                                        <stop offset="95%" stopColor="#14b8a6" stopOpacity={0.05} />
+                                    </linearGradient>
+                                </defs>
                             </RadarChart>
                         </ResponsiveContainer>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 relative z-10">
-                        <div className="bg-neutral-950/50 p-3 rounded-2xl border border-white/5">
-                            <p className="text-xs text-neutral-500 font-bold mb-1">主要な没入トリガー</p>
-                            <p className="font-bold text-teal-400">{traits?.immersion_triggers.primary === 'unknown' ? 'データ不足' : traits?.immersion_triggers.primary}</p>
+                    <div className="grid grid-cols-2 gap-4 relative z-10">
+                        <div className="bg-[#050505]/40 p-4 rounded-2xl border border-white/5 backdrop-blur-md shadow-inner transition-colors hover:bg-white/5">
+                            <p className="text-[10px] text-neutral-500 font-bold mb-1.5 uppercase tracking-widest">没入トリガー</p>
+                            <p className="font-black tracking-wide text-teal-400">{traits?.immersion_triggers.primary === 'unknown' ? 'データ不足' : traits?.immersion_triggers.primary}</p>
                         </div>
-                        <div className="bg-neutral-950/50 p-3 rounded-2xl border border-white/5">
-                            <p className="text-xs text-neutral-500 font-bold mb-1">探索スタイル</p>
-                            <p className="font-bold text-blue-400">{traits?.exploration_score && traits.exploration_score > 0.6 ? '広く探索する派' : '深く掘り下げる派'}</p>
+                        <div className="bg-[#050505]/40 p-4 rounded-2xl border border-white/5 backdrop-blur-md shadow-inner transition-colors hover:bg-white/5">
+                            <p className="text-[10px] text-neutral-500 font-bold mb-1.5 uppercase tracking-widest">探索スタイル</p>
+                            <p className="font-black tracking-wide text-blue-400">{traits?.exploration_score && traits.exploration_score > 0.6 ? '広く探索する派' : '深く掘り下げる派'}</p>
                         </div>
                     </div>
                 </section>
 
                 {/* Section 2: AIキャリア提案 */}
                 {suggestion && (
-                    <section className="space-y-6">
-                        <h2 className="text-2xl font-black flex items-center gap-3">
-                            <span className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
-                                <Sparkles className="text-white" size={20} />
+                    <section className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                        <div className="flex items-center gap-4 mb-2">
+                            <span className="w-12 h-12 rounded-[1.25rem] bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-[0_10px_30px_rgba(168,85,247,0.3)] animate-float">
+                                <Sparkles className="text-white" size={24} />
                             </span>
-                            AIキャリア提案
-                        </h2>
+                            <h2 className="text-3xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-200 to-pink-200 drop-shadow-sm">
+                                AIキャリア提案
+                            </h2>
+                        </div>
 
                         {/* 根拠 */}
-                        <div className="bg-purple-950/20 border border-purple-500/20 rounded-2xl p-5 text-sm leading-relaxed text-purple-100">
-                            <span className="font-bold text-purple-400 mb-2 block">💡 なぜこの提案？</span>
-                            {suggestion.reasoning || 'あなたの旅行中の「探索性」や「没入条件」のデータ傾向を元に、最も能力を発揮しやすい環境を導き出しました。'}
+                        <div className="glass-effect-dark bg-purple-950/20 border border-purple-500/20 rounded-[2rem] p-6 text-sm leading-relaxed text-purple-100 shadow-[0_10px_40px_-10px_rgba(168,85,247,0.1)] relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent pointer-events-none group-hover:from-purple-500/10 transition-colors duration-500"></div>
+                            <h3 className="font-bold text-purple-300 mb-2.5 flex items-center gap-2 relative z-10 text-[13px] tracking-wider uppercase">
+                                <div className="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]"></div>
+                                なぜこの提案？
+                            </h3>
+                            <p className="relative z-10 font-medium">{suggestion?.reasoning || 'あなたの旅行中の「探索性」や「没入条件」のデータ傾向を元に、最も能力を発揮しやすい環境を導き出しました。'}</p>
                         </div>
 
                         {/* 向いている業界 */}
-                        <div className="bg-neutral-900 border border-white/5 rounded-3xl p-6">
-                            <h3 className="font-bold text-neutral-400 text-sm flex items-center gap-2 mb-4">
-                                <Briefcase size={16} className="text-blue-400" />
+                        <div className="glass-effect border border-white/5 rounded-[2rem] p-7 transition-all hover:bg-white/[0.03] hover:border-white/10 hover:shadow-xl">
+                            <h3 className="font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-200 text-sm flex items-center gap-3 mb-5 tracking-wide">
+                                <div className="p-2 bg-blue-500/20 rounded-xl border border-blue-500/30">
+                                    <Briefcase size={16} className="text-blue-400" />
+                                </div>
                                 ポテンシャルを発揮しやすい業界 / 職種
                             </h3>
-                            <div className="flex flex-wrap gap-2">
-                                {suggestion.fit_industries?.map((item: string, i: number) => (
-                                    <span key={i} className="bg-blue-500/10 text-blue-300 border border-blue-500/20 px-3 py-1.5 rounded-lg text-sm font-bold">
+                            <div className="flex flex-wrap gap-2.5">
+                                {suggestion?.fit_industries?.map((item: string, i: number) => (
+                                    <span key={i} className="bg-gradient-to-br from-[#050505] to-neutral-900 border border-white/10 text-neutral-300 px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:border-blue-500/40 hover:text-blue-300 transition-colors select-none">
                                         {item}
                                     </span>
                                 ))}
@@ -178,42 +210,48 @@ export default function ResultPage() {
                         </div>
 
                         {/* 働き方 */}
-                        <div className="bg-neutral-900 border border-white/5 rounded-3xl p-6">
-                            <h3 className="font-bold text-neutral-400 text-sm flex items-center gap-2 mb-4">
-                                <Heart size={16} className="text-pink-400" />
+                        <div className="glass-effect border border-white/5 rounded-[2rem] p-7 transition-all hover:bg-white/[0.03] hover:border-white/10 hover:shadow-xl">
+                            <h3 className="font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-rose-200 text-sm flex items-center gap-3 mb-5 tracking-wide">
+                                <div className="p-2 bg-pink-500/20 rounded-xl border border-pink-500/30">
+                                    <Heart size={16} className="text-pink-400" />
+                                </div>
                                 フィットするワークスタイル
                             </h3>
-                            <ul className="space-y-2">
-                                {suggestion.fit_work_style?.map((item: string, i: number) => (
-                                    <li key={i} className="flex items-start gap-3 text-sm text-neutral-200">
-                                        <span className="text-pink-400 mt-0.5">•</span> {item}
+                            <ul className="space-y-4">
+                                {suggestion?.fit_work_style?.map((item: string, i: number) => (
+                                    <li key={i} className="flex items-start gap-4 text-[13px] leading-relaxed text-neutral-300 font-medium">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-pink-500 mt-2 shadow-[0_0_8px_rgba(236,72,153,0.8)] shrink-0"></div> {item}
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
                         {/* 組織文化 */}
-                        <div className="bg-neutral-900 border border-white/5 rounded-3xl p-6">
-                            <h3 className="font-bold text-neutral-400 text-sm flex items-center gap-2 mb-4">
-                                <Building size={16} className="text-orange-400" />
+                        <div className="glass-effect border border-white/5 rounded-[2rem] p-7 transition-all hover:bg-white/[0.03] hover:border-white/10 hover:shadow-xl">
+                            <h3 className="font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-amber-200 text-sm flex items-center gap-3 mb-5 tracking-wide">
+                                <div className="p-2 bg-orange-500/20 rounded-xl border border-orange-500/30">
+                                    <Building size={16} className="text-orange-400" />
+                                </div>
                                 適した組織文化・カルチャー
                             </h3>
-                            <ul className="space-y-2">
-                                {suggestion.fit_org_culture?.map((item: string, i: number) => (
-                                    <li key={i} className="flex items-start gap-3 text-sm text-neutral-200">
-                                        <span className="text-orange-400 mt-0.5">•</span> {item}
+                            <ul className="space-y-4">
+                                {suggestion?.fit_org_culture?.map((item: string, i: number) => (
+                                    <li key={i} className="flex items-start gap-4 text-[13px] leading-relaxed text-neutral-300 font-medium">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2 shadow-[0_0_8px_rgba(249,115,22,0.8)] shrink-0"></div> {item}
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
                         {/* 成長メモ */}
-                        <div className="bg-gradient-to-r from-neutral-900 to-neutral-900 border-l-4 border-teal-500 rounded-r-3xl p-6 shadow-lg">
-                            <h3 className="font-bold text-teal-400 text-xs tracking-wider mb-2 flex items-center gap-1.5">
-                                <TrendingUp size={14} /> ADVICE FOR GROWTH
+                        <div className="relative overflow-hidden bg-gradient-to-br from-[#050505] to-neutral-900 border border-teal-500/30 rounded-[2rem] p-8 shadow-[0_10px_40px_-15px_rgba(20,184,166,0.3)] mt-8">
+                            <div className="absolute top-0 left-0 bottom-0 w-2 bg-gradient-to-b from-teal-400 to-cyan-500 shadow-[0_0_15px_rgba(45,212,191,0.5)]"></div>
+
+                            <h3 className="font-black text-teal-400 text-xs tracking-widest mb-4 flex items-center gap-2 uppercase">
+                                <TrendingUp size={16} /> Advice for Growth
                             </h3>
-                            <p className="text-sm leading-relaxed text-neutral-200">
-                                {suggestion.growth_notes}
+                            <p className="text-[13px] leading-relaxed text-neutral-300 font-medium">
+                                {suggestion?.growth_notes}
                             </p>
                         </div>
                     </section>
