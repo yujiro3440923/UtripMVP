@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { User } from '@supabase/supabase-js'
-import { ArrowLeft, User as UserIcon, Award, Settings, Palette, Edit2, Check, Sparkles, Navigation, Lock, Share2 } from 'lucide-react'
+import { ArrowLeft, User as UserIcon, Award, Settings, Palette, Edit2, Check, Sparkles, Navigation, Lock, Share2, Sun, Moon } from 'lucide-react'
 import { useTheme } from '@/providers/ThemeProvider'
 import { toast } from 'react-hot-toast'
 
@@ -36,7 +36,7 @@ const THEMES: ThemeOption[] = [
 
 export default function ProfilePage() {
     const router = useRouter()
-    const { theme, setTheme } = useTheme()
+    const { theme, setTheme, lightMode, toggleLightMode } = useTheme()
 
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true)
@@ -137,7 +137,7 @@ export default function ProfilePage() {
     const rank = getRank(stats.tripCount)
 
     return (
-        <div className="min-h-screen bg-[#020208] text-white pb-32 font-sans selection:bg-t-primary-500/30 relative overflow-hidden">
+        <div className={`min-h-screen ${lightMode ? 'bg-[#f8f9fc]' : 'bg-[#020208]'} text-[var(--foreground)] pb-32 font-sans selection:bg-t-primary-500/30 relative overflow-hidden`}>
             {/* Background aurora */}
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-gradient-to-bl from-blue-600/15 via-purple-600/10 to-transparent rounded-full blur-[160px] animate-breathe" style={{ animationDuration: '8s' }}></div>
@@ -249,7 +249,23 @@ export default function ProfilePage() {
                         <div className="p-2 bg-t-primary-500/20 rounded-xl border border-t-primary-500/30">
                             <Palette size={18} className="text-t-primary-400" />
                         </div>
-                        <h3 className="text-lg font-bold tracking-tight text-white">テーマカラー設定</h3>
+                        <h3 className="text-lg font-bold tracking-tight">テーマカラー設定</h3>
+                    </div>
+
+                    {/* Light / Dark Toggle */}
+                    <div className="glass-effect rounded-2xl p-5 mb-4">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                {lightMode ? <Sun size={18} className="text-amber-500" /> : <Moon size={18} className="text-blue-400" />}
+                                <span className="text-sm font-bold">{lightMode ? 'ライトモード' : 'ダークモード'}</span>
+                            </div>
+                            <button
+                                onClick={toggleLightMode}
+                                className={`relative w-14 h-8 rounded-full transition-all duration-300 ${lightMode ? 'bg-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.4)]' : 'bg-neutral-700'}`}
+                            >
+                                <div className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-md transition-transform duration-300 ${lightMode ? 'translate-x-7' : 'translate-x-1'}`}></div>
+                            </button>
+                        </div>
                     </div>
 
                     <div className="glass-effect rounded-[2rem] p-6">

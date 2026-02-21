@@ -4,9 +4,11 @@ import Image from 'next/image'
 import { supabase } from '@/lib/supabase/client'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTheme } from '@/providers/ThemeProvider'
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false)
+    const { lightMode } = useTheme()
 
     const handleGoogleLogin = async () => {
         try {
@@ -32,7 +34,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#020208] text-white flex flex-col justify-center items-center p-6 relative overflow-hidden font-sans">
+        <div className={`min-h-screen ${lightMode ? 'bg-[#f8f9fc]' : 'bg-[#020208]'} text-[var(--foreground)] flex flex-col justify-center items-center p-6 relative overflow-hidden font-sans`}>
 
             {/* === Background: Neon light flows === */}
             <div className="absolute inset-0 z-0">

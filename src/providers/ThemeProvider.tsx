@@ -7,12 +7,15 @@ type Theme = 'default' | 'ocean' | 'sunset' | 'amethyst' | 'monochrome'
 interface ThemeContextType {
     theme: Theme
     setTheme: (theme: Theme) => void
+    lightMode: boolean
+    toggleLightMode: () => void
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [theme, setThemeState] = useState<Theme>('default')
+    const [lightMode, setLightMode] = useState(false)
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
@@ -20,6 +23,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const savedTheme = localStorage.getItem('utrip-theme') as Theme
         if (savedTheme && ['default', 'ocean', 'sunset', 'amethyst', 'monochrome'].includes(savedTheme)) {
             setThemeState(savedTheme)
+        }
+        const savedLightMode = localStorage.getItem('utrip-light-mode')
+        if (savedLightMode === 'true') {
+            setLightMode(true)
         }
         setMounted(true)
     }, [])
@@ -38,16 +45,28 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
             root.classList.add(`theme-${theme}`)
         }
 
+        // Handle light mode
+        if (lightMode) {
+            root.classList.add('light-mode')
+        } else {
+            root.classList.remove('light-mode')
+        }
+
         // Save to localStorage
         localStorage.setItem('utrip-theme', theme)
-    }, [theme, mounted])
+        localStorage.setItem('utrip-light-mode', String(lightMode))
+    }, [theme, lightMode, mounted])
 
     const setTheme = (newTheme: Theme) => {
         setThemeState(newTheme)
     }
 
+    const toggleLightMode = () => {
+        setLightMode(prev => !prev)
+    }
+
     return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
+        <ThemeContext.Provider value={{ theme, setTheme, lightMode, toggleLightMode }}>
             <div style={{ visibility: mounted ? 'visible' : 'hidden' }} className="contents">
                 {children}
             </div>
