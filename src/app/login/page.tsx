@@ -39,17 +39,20 @@ export default function LoginPage() {
             <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none animate-float" style={{ animationDelay: '2s' }}></div>
 
             <div className="glass-effect-dark max-w-md w-full p-10 rounded-[2.5rem] z-10 animate-fade-in-up">
-                <div className="flex justify-center mb-10 relative">
+                <div className="flex flex-col items-center justify-center mb-10 relative">
                     <div className="absolute inset-0 bg-teal-400/20 blur-[30px] rounded-full animate-pulse-glow"></div>
-                    <div className="relative z-10 animate-float" style={{ animationDuration: '4s' }}>
+                    <div className="relative z-10 animate-float flex flex-col items-center" style={{ animationDuration: '4s' }}>
                         <Image
                             src="/images/Utriprogo.png"
                             alt="Utrip Logo"
                             width={240}
                             height={80}
-                            className="object-contain drop-shadow-[0_10px_20px_rgba(20,184,166,0.3)]"
+                            className="object-contain drop-shadow-[0_10px_20px_rgba(20,184,166,0.3)] mb-1"
                             priority
                         />
+                        <span className="text-sm font-black tracking-[0.35em] text-transparent bg-clip-text bg-gradient-to-r from-teal-200 via-white to-blue-200 uppercase drop-shadow-[0_2px_10px_rgba(20,184,166,0.8)]">
+                            Utrip (MVP)
+                        </span>
                     </div>
                 </div>
 

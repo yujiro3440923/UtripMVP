@@ -90,7 +90,7 @@ export default function Home() {
 
       {/* Header */}
       <header className="px-6 py-4 flex justify-between items-center sticky top-0 bg-[#050505]/70 backdrop-blur-2xl z-20 border-b border-white/5 shadow-sm">
-        <div className="flex items-center">
+        <div className="flex flex-col items-start justify-center">
           <Image
             src="/images/Utriprogo.png"
             alt="Utrip"
@@ -99,6 +99,9 @@ export default function Home() {
             className="object-contain"
             priority
           />
+          <span className="text-[9px] font-black tracking-[0.25em] text-teal-300 ml-1 mt-0.5 uppercase drop-shadow-[0_0_8px_rgba(20,184,166,0.5)]">
+            Utrip (MVP)
+          </span>
         </div>
         <button
           onClick={handleLogout}
@@ -183,19 +186,50 @@ export default function Home() {
         </div>
       </main>
 
-      {/* FAB - Enhanced glow and interaction */}
-      <div className="fixed bottom-8 right-6 lg:right-[calc(50%-12rem)] z-30 group">
-        <div className="absolute inset-0 bg-teal-400 rounded-full blur-xl opacity-40 group-hover:opacity-60 group-hover:blur-2xl transition-all duration-500"></div>
-        <button
-          onClick={createTrip}
-          className="relative bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-300 hover:from-teal-300 hover:via-cyan-300 hover:to-teal-200 text-teal-950 px-6 py-4 rounded-full shadow-[0_10px_40px_rgba(45,212,191,0.4)] transition-all duration-300 transform group-hover:scale-105 group-active:scale-95 flex items-center gap-3 font-bold text-lg border border-teal-200/50"
-        >
-          <div className="bg-white/20 rounded-full p-1">
-            <Plus size={20} strokeWidth={3} className="text-teal-950" />
+      {/* Bottom Navigation Space */}
+      <div className="h-32"></div>
+
+      {/* App-like Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#050505]/80 backdrop-blur-3xl border-t border-white/5 pt-2 px-6 flex justify-around items-center h-[90px] shadow-[0_-15px_40px_rgba(0,0,0,0.8)] pb-safe lg:rounded-t-[2.5rem] lg:w-full lg:max-w-md lg:mx-auto">
+
+        {/* Nav Item: Home */}
+        <button className="flex flex-col items-center gap-1.5 text-teal-400 group relative mb-2">
+          <div className="p-2 rounded-2xl bg-teal-500/10 group-hover:bg-teal-500/20 transition-all duration-300 shadow-[inset_0_1px_4px_rgba(255,255,255,0.1)]">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
           </div>
-          新しい旅行
+          <span className="text-[10px] font-black tracking-widest uppercase">Home</span>
+          <div className="absolute -bottom-2.5 w-1 h-1 rounded-full bg-teal-400 shadow-[0_0_8px_rgba(45,212,191,1)]"></div>
         </button>
-      </div>
+
+        {/* FAB: Center Action - Create Trip */}
+        <div className="relative -top-8 group flex flex-col items-center">
+          <div className="absolute top-2 w-20 h-20 bg-gradient-to-tr from-teal-400 via-cyan-300 to-blue-500 rounded-full blur-xl opacity-50 group-hover:opacity-80 group-hover:blur-2xl transition-all duration-500 animate-pulse-glow"></div>
+          <button
+            onClick={createTrip}
+            className="relative flex items-center justify-center w-[80px] h-[80px] bg-gradient-to-br from-teal-300 via-cyan-400 to-blue-600 rounded-full shadow-[0_20px_40px_rgba(45,212,191,0.5),inset_0_4px_12px_rgba(255,255,255,0.7)] transform transition-all duration-500 group-hover:scale-105 group-active:scale-95 border-[3px] border-[#0a0a0a] overflow-hidden"
+          >
+            {/* Shimmer effect inside button */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
+            <Plus size={38} strokeWidth={2.5} className="text-teal-950 relative z-10 drop-shadow-sm" />
+          </button>
+          <span className="absolute -bottom-8 text-[13px] font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-cyan-100 whitespace-nowrap tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            旅をする
+          </span>
+        </div>
+
+        {/* Nav Item: Profile / Settings */}
+        <button className="flex flex-col items-center gap-1.5 text-neutral-500 hover:text-neutral-300 transition-colors group mb-2">
+          <div className="p-2 rounded-2xl group-hover:bg-white/5 transition-all duration-300">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <span className="text-[10px] font-bold tracking-widest uppercase">Profile</span>
+        </button>
+
+      </nav>
     </div>
   )
 }
