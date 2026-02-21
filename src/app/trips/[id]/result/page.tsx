@@ -142,7 +142,7 @@ export default function ResultPage() {
             <main className="max-w-xl mx-auto p-6 space-y-12 relative z-10">
 
                 {/* Section 1: 6軸レーダーチャート */}
-                <section className="glass-effect-dark rounded-[2.5rem] p-8 relative overflow-hidden animate-fade-in-up">
+                <section className={`rounded-[2.5rem] p-8 relative overflow-hidden animate-fade-in-up ${lightMode ? 'bg-white/70 border border-neutral-200 shadow-lg' : 'glass-effect-dark'}`}>
                     <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-teal-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse-glow"></div>
                     <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
 
@@ -156,8 +156,8 @@ export default function ResultPage() {
                     <div className="h-72 w-full relative z-10 -ml-2 mb-6">
                         <ResponsiveContainer width="100%" height="100%">
                             <RadarChart cx="50%" cy="50%" outerRadius="65%" data={radarData}>
-                                <PolarGrid stroke="rgba(255,255,255,0.05)" />
-                                <PolarAngleAxis dataKey="subject" tick={{ fill: '#a3a3a3', fontSize: 11, fontWeight: 'bold' }} stroke="none" />
+                                <PolarGrid stroke={lightMode ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.05)'} />
+                                <PolarAngleAxis dataKey="subject" tick={{ fill: lightMode ? '#3a3a5a' : '#a3a3a3', fontSize: 11, fontWeight: 'bold' }} stroke="none" />
                                 <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
                                 <Radar name="本人" dataKey="A" stroke="#14b8a6" strokeWidth={3} fill="url(#colorTeal)" fillOpacity={1} />
                                 <defs>
@@ -171,11 +171,11 @@ export default function ResultPage() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 relative z-10">
-                        <div className="bg-[#050505]/40 p-4 rounded-2xl border border-white/5 backdrop-blur-md shadow-inner transition-colors hover:bg-white/5">
+                        <div className={`p-4 rounded-2xl border backdrop-blur-md shadow-inner transition-colors ${lightMode ? 'bg-white/60 border-neutral-200 hover:bg-white/80' : 'bg-[#050505]/40 border-white/5 hover:bg-white/5'}`}>
                             <p className="text-[10px] text-neutral-500 font-bold mb-1.5 uppercase tracking-widest">没入トリガー</p>
                             <p className="font-black tracking-wide text-teal-400">{traits?.immersion_triggers.primary === 'unknown' ? 'データ不足' : traits?.immersion_triggers.primary}</p>
                         </div>
-                        <div className="bg-[#050505]/40 p-4 rounded-2xl border border-white/5 backdrop-blur-md shadow-inner transition-colors hover:bg-white/5">
+                        <div className={`p-4 rounded-2xl border backdrop-blur-md shadow-inner transition-colors ${lightMode ? 'bg-white/60 border-neutral-200 hover:bg-white/80' : 'bg-[#050505]/40 border-white/5 hover:bg-white/5'}`}>
                             <p className="text-[10px] text-neutral-500 font-bold mb-1.5 uppercase tracking-widest">探索スタイル</p>
                             <p className="font-black tracking-wide text-blue-400">{traits?.exploration_score && traits.exploration_score > 0.6 ? '広く探索する派' : '深く掘り下げる派'}</p>
                         </div>
@@ -195,9 +195,9 @@ export default function ResultPage() {
                         </div>
 
                         {/* 根拠 */}
-                        <div className="glass-effect-dark bg-purple-950/20 border border-purple-500/20 rounded-[2rem] p-6 text-sm leading-relaxed text-purple-100 shadow-[0_10px_40px_-10px_rgba(168,85,247,0.1)] relative overflow-hidden group">
+                        <div className={`rounded-[2rem] p-6 text-sm leading-relaxed relative overflow-hidden group border ${lightMode ? 'bg-purple-50/80 border-purple-200 text-purple-900 shadow-md' : 'glass-effect-dark bg-purple-950/20 border-purple-500/20 text-purple-100 shadow-[0_10px_40px_-10px_rgba(168,85,247,0.1)]'}`}>
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent pointer-events-none group-hover:from-purple-500/10 transition-colors duration-500"></div>
-                            <h3 className="font-bold text-purple-300 mb-2.5 flex items-center gap-2 relative z-10 text-[13px] tracking-wider uppercase">
+                            <h3 className={`font-bold mb-2.5 flex items-center gap-2 relative z-10 text-[13px] tracking-wider uppercase ${lightMode ? 'text-purple-700' : 'text-purple-300'}`}>
                                 <div className="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]"></div>
                                 なぜこの提案？
                             </h3>
@@ -205,7 +205,7 @@ export default function ResultPage() {
                         </div>
 
                         {/* 向いている業界 */}
-                        <div className="glass-effect border border-white/5 rounded-[2rem] p-7 transition-all hover:bg-white/[0.03] hover:border-white/10 hover:shadow-xl">
+                        <div className={`rounded-[2rem] p-7 transition-all hover:shadow-xl border ${lightMode ? 'bg-white/70 border-neutral-200 hover:bg-white/90' : 'glass-effect border-white/5 hover:bg-white/[0.03] hover:border-white/10'}`}>
                             <h3 className="font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-200 text-sm flex items-center gap-3 mb-5 tracking-wide">
                                 <div className="p-2 bg-blue-500/20 rounded-xl border border-blue-500/30">
                                     <Briefcase size={16} className="text-blue-400" />
@@ -214,7 +214,7 @@ export default function ResultPage() {
                             </h3>
                             <div className="flex flex-wrap gap-2.5">
                                 {suggestion?.fit_industries?.map((item: string, i: number) => (
-                                    <span key={i} className="bg-gradient-to-br from-[#050505] to-neutral-900 border border-white/10 text-neutral-300 px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:border-blue-500/40 hover:text-blue-300 transition-colors select-none">
+                                    <span key={i} className={`px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm transition-colors select-none border ${lightMode ? 'bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100' : 'bg-gradient-to-br from-[#050505] to-neutral-900 border-white/10 text-neutral-300 hover:border-blue-500/40 hover:text-blue-300'}`}>
                                         {item}
                                     </span>
                                 ))}
@@ -222,7 +222,7 @@ export default function ResultPage() {
                         </div>
 
                         {/* 働き方 */}
-                        <div className="glass-effect border border-white/5 rounded-[2rem] p-7 transition-all hover:bg-white/[0.03] hover:border-white/10 hover:shadow-xl">
+                        <div className={`rounded-[2rem] p-7 transition-all hover:shadow-xl border ${lightMode ? 'bg-white/70 border-neutral-200 hover:bg-white/90' : 'glass-effect border-white/5 hover:bg-white/[0.03] hover:border-white/10'}`}>
                             <h3 className="font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-rose-200 text-sm flex items-center gap-3 mb-5 tracking-wide">
                                 <div className="p-2 bg-pink-500/20 rounded-xl border border-pink-500/30">
                                     <Heart size={16} className="text-pink-400" />
@@ -231,7 +231,7 @@ export default function ResultPage() {
                             </h3>
                             <ul className="space-y-4">
                                 {suggestion?.fit_work_style?.map((item: string, i: number) => (
-                                    <li key={i} className="flex items-start gap-4 text-[13px] leading-relaxed text-neutral-300 font-medium">
+                                    <li key={i} className={`flex items-start gap-4 text-[13px] leading-relaxed font-medium ${lightMode ? 'text-neutral-700' : 'text-neutral-300'}`}>
                                         <div className="w-1.5 h-1.5 rounded-full bg-pink-500 mt-2 shadow-[0_0_8px_rgba(236,72,153,0.8)] shrink-0"></div> {item}
                                     </li>
                                 ))}
@@ -239,7 +239,7 @@ export default function ResultPage() {
                         </div>
 
                         {/* 組織文化 */}
-                        <div className="glass-effect border border-white/5 rounded-[2rem] p-7 transition-all hover:bg-white/[0.03] hover:border-white/10 hover:shadow-xl">
+                        <div className={`rounded-[2rem] p-7 transition-all hover:shadow-xl border ${lightMode ? 'bg-white/70 border-neutral-200 hover:bg-white/90' : 'glass-effect border-white/5 hover:bg-white/[0.03] hover:border-white/10'}`}>
                             <h3 className="font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-amber-200 text-sm flex items-center gap-3 mb-5 tracking-wide">
                                 <div className="p-2 bg-orange-500/20 rounded-xl border border-orange-500/30">
                                     <Building size={16} className="text-orange-400" />
@@ -256,13 +256,13 @@ export default function ResultPage() {
                         </div>
 
                         {/* 成長メモ */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-[#050505] to-neutral-900 border border-teal-500/30 rounded-[2rem] p-8 shadow-[0_10px_40px_-15px_rgba(20,184,166,0.3)] mt-8">
+                        <div className={`relative overflow-hidden rounded-[2rem] p-8 mt-8 border ${lightMode ? 'bg-teal-50/80 border-teal-200 shadow-md' : 'bg-gradient-to-br from-[#050505] to-neutral-900 border-teal-500/30 shadow-[0_10px_40px_-15px_rgba(20,184,166,0.3)]'}`}>
                             <div className="absolute top-0 left-0 bottom-0 w-2 bg-gradient-to-b from-teal-400 to-cyan-500 shadow-[0_0_15px_rgba(45,212,191,0.5)]"></div>
 
                             <h3 className="font-black text-teal-400 text-xs tracking-widest mb-4 flex items-center gap-2 uppercase">
                                 <TrendingUp size={16} /> Advice for Growth
                             </h3>
-                            <p className="text-[13px] leading-relaxed text-neutral-300 font-medium">
+                            <p className={`text-[13px] leading-relaxed font-medium ${lightMode ? 'text-neutral-700' : 'text-neutral-300'}`}>
                                 {suggestion?.growth_notes}
                             </p>
                         </div>
