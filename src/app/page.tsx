@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
 import Image from 'next/image'
-import { LogOut, Plus, MapPin, Activity, ChevronRight, Sparkles, Orbit } from 'lucide-react'
+import { LogOut, Plus, MapPin, Activity, ChevronRight, Sparkles, Orbit, Archive } from 'lucide-react'
 import type { User } from '@supabase/supabase-js'
 import { useTheme } from '@/providers/ThemeProvider'
 import { useSwipeNav } from '@/hooks/useSwipeNav'
@@ -270,6 +270,14 @@ export default function Home() {
             <Orbit size={22} />
           </div>
           <span className="text-[10px] font-bold tracking-widest uppercase">Orbit</span>
+        </Link>
+
+        {/* Nav Item: Bucket */}
+        <Link href="/bucket" className="flex flex-col items-center gap-1.5 text-neutral-500 hover:text-cyan-400 transition-colors group mb-2">
+          <div className="p-2 rounded-2xl group-hover:bg-cyan-500/10 transition-all duration-300">
+            <Archive size={22} />
+          </div>
+          <span className="text-[10px] font-bold tracking-widest uppercase">Bucket</span>
         </Link>
 
         {/* Nav Item: Profile / Settings */}

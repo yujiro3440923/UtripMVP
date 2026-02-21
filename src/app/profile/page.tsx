@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { User } from '@supabase/supabase-js'
-import { ArrowLeft, User as UserIcon, Award, Settings, Palette, Edit2, Check, Sparkles, Navigation, Lock, Share2, Sun, Moon, Orbit } from 'lucide-react'
+import { ArrowLeft, User as UserIcon, Award, Settings, Palette, Edit2, Check, Sparkles, Navigation, Lock, Share2, Sun, Moon, Orbit, Archive } from 'lucide-react'
 import { useTheme } from '@/providers/ThemeProvider'
 import { toast } from 'react-hot-toast'
 import { useSwipeNav } from '@/hooks/useSwipeNav'
@@ -355,6 +355,14 @@ export default function ProfilePage() {
                         <Orbit size={22} />
                     </div>
                     <span className="text-[10px] font-bold tracking-widest uppercase">Orbit</span>
+                </Link>
+
+                {/* Nav Item: Bucket */}
+                <Link href="/bucket" className="flex flex-col items-center gap-1.5 text-neutral-500 hover:text-cyan-400 transition-colors group mb-2">
+                    <div className="p-2 rounded-2xl group-hover:bg-cyan-500/10 transition-all duration-300">
+                        <Archive size={22} />
+                    </div>
+                    <span className="text-[10px] font-bold tracking-widest uppercase">Bucket</span>
                 </Link>
 
                 <button className="flex flex-col items-center gap-1.5 text-t-primary-400 group relative mb-2">
