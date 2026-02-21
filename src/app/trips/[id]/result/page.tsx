@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { analyzeTripData, TraitAnalysisResult } from '@/lib/analysis/traitAnalyzer'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts'
-import { ArrowLeft, Sparkles, AlertCircle, Briefcase, Heart, Building, TrendingUp, Share2 } from 'lucide-react'
+import { ArrowLeft, Sparkles, AlertCircle, Briefcase, Heart, Building, TrendingUp, Share2, BookOpen, MapPin, Footprints, Compass } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 
 export default function ResultPage() {
@@ -18,6 +18,8 @@ export default function ResultPage() {
     const [traits, setTraits] = useState<TraitAnalysisResult | null>(null)
     const [suggestion, setSuggestion] = useState<Record<string, any> | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [diary, setDiary] = useState<{ text: string; date: string; metrics: Record<string, any> } | null>(null)
+    const [diaryLoading, setDiaryLoading] = useState(false)
 
     useEffect(() => {
         const runAnalysis = async () => {
@@ -257,6 +259,94 @@ export default function ResultPage() {
                         </div>
                     </section>
                 )}
+
+                {/* === AI Diary Section === */}
+                <section className="mt-10 animate-fade-in-up">
+                    <div className="flex items-center gap-3 mb-5 px-2">
+                        <div className="p-2.5 bg-amber-500/15 rounded-xl border border-amber-500/25">
+                            <BookOpen size={18} className="text-amber-400" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-bold tracking-tight text-white">今日のあなた</h3>
+                            <p className="text-[10px] text-neutral-500 font-bold tracking-widest">AI DIARY</p>
+                        </div>
+                    </div>
+
+                    {!diary && !diaryLoading && (
+                        <button
+                            onClick={async () => {
+                                setDiaryLoading(true)
+                                try {
+                                    const res = await fetch('/api/diary-generate', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ tripId })
+                                    })
+                                    const data = await res.json()
+                                    if (data.success) {
+                                        setDiary(data.diary)
+                                    } else {
+                                        toast.error('日記の生成に失敗しました')
+                                    }
+                                } catch {
+                                    toast.error('日記の生成に失敗しました')
+                                } finally {
+                                    setDiaryLoading(false)
+                                }
+                            }}
+                            className="w-full glass-ultra rounded-[2rem] p-8 text-center group hover:scale-[1.01] transition-all duration-300 hover:border-amber-500/20 hover:shadow-[0_10px_40px_-10px_rgba(245,158,11,0.15)] relative overflow-hidden glass-shimmer"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/5 to-amber-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div className="w-16 h-16 mx-auto mb-4 glow-sphere opacity-40 animate-antigrav" style={{ animationDuration: '6s', background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), rgba(245,158,11,0.4) 40%, transparent 70%)', boxShadow: '0 0 30px rgba(245,158,11,0.3)' }}></div>
+                            <p className="text-white font-bold text-lg mb-1 relative z-10">AIに日記を書いてもらう</p>
+                            <p className="text-neutral-500 text-xs relative z-10">旅のデータをもとに「今日のあなた」を描写します</p>
+                        </button>
+                    )}
+
+                    {diaryLoading && (
+                        <div className="glass-ultra rounded-[2rem] p-10 text-center animate-slide-up-spring">
+                            <div className="relative w-16 h-16 mx-auto mb-6">
+                                <div className="absolute inset-0 bg-amber-400/20 rounded-full blur-xl animate-pulse-glow"></div>
+                                <div className="absolute inset-0 border-[3px] border-amber-400 rounded-full border-t-transparent animate-spin" style={{ animationDuration: '1.5s' }}></div>
+                                <BookOpen className="absolute inset-0 m-auto text-amber-300 animate-pulse" size={24} />
+                            </div>
+                            <p className="text-amber-300 font-bold tracking-widest text-sm animate-pulse">AIが日記を執筆中...</p>
+                        </div>
+                    )}
+
+                    {diary && (
+                        <div className="glass-ultra rounded-[2rem] p-8 relative overflow-hidden glass-shimmer animate-slide-up-spring">
+                            {/* Decorative glow */}
+                            <div className="absolute top-0 right-0 w-24 h-24 glow-sphere opacity-15" style={{ background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), rgba(245,158,11,0.3) 40%, transparent 70%)' }}></div>
+
+                            {/* Date badge */}
+                            <div className="flex items-center gap-2 mb-5">
+                                <span className="text-[10px] px-3 py-1.5 rounded-full font-bold tracking-widest bg-amber-500/10 text-amber-400 border border-amber-500/20">📅 {diary.date}</span>
+                            </div>
+
+                            {/* Diary text */}
+                            <div className="text-[14px] leading-[1.9] text-neutral-300 font-medium whitespace-pre-line mb-6">
+                                {diary.text}
+                            </div>
+
+                            {/* Metrics bubbles */}
+                            <div className="flex flex-wrap gap-3 pt-4 border-t border-white/5">
+                                <div className="flex items-center gap-1.5 text-[11px] text-neutral-500 bg-white/5 px-3 py-1.5 rounded-full">
+                                    <Footprints size={12} className="text-teal-400" />
+                                    {diary.metrics.distance}km
+                                </div>
+                                <div className="flex items-center gap-1.5 text-[11px] text-neutral-500 bg-white/5 px-3 py-1.5 rounded-full">
+                                    <Compass size={12} className="text-blue-400" />
+                                    探索度 {diary.metrics.explorationRate}
+                                </div>
+                                <div className="flex items-center gap-1.5 text-[11px] text-neutral-500 bg-white/5 px-3 py-1.5 rounded-full">
+                                    <MapPin size={12} className="text-purple-400" />
+                                    {diary.metrics.spotsVisited}スポット
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </section>
 
             </main>
 
