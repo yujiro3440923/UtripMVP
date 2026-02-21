@@ -39,16 +39,19 @@ export default function LoginPage() {
             <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none animate-float" style={{ animationDelay: '2s' }}></div>
 
             <div className="glass-effect-dark max-w-md w-full p-10 rounded-[2.5rem] z-10 animate-fade-in-up">
-                <div className="flex justify-center mb-8 relative">
-                    <div className="absolute inset-0 bg-teal-400/20 blur-xl rounded-full animate-pulse-glow"></div>
-                    <div className="w-20 h-20 bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center shadow-2xl relative z-10 animate-float" style={{ animationDuration: '4s' }}>
-                        <Activity className="text-white w-10 h-10" strokeWidth={2.5} />
+                <div className="flex justify-center mb-10 relative">
+                    <div className="absolute inset-0 bg-teal-400/20 blur-[30px] rounded-full animate-pulse-glow"></div>
+                    <div className="relative z-10 animate-float" style={{ animationDuration: '4s' }}>
+                        <Image
+                            src="/images/Utriprogo.png"
+                            alt="Utrip Logo"
+                            width={240}
+                            height={80}
+                            className="object-contain drop-shadow-[0_10px_20px_rgba(20,184,166,0.3)]"
+                            priority
+                        />
                     </div>
                 </div>
-
-                <h1 className="text-5xl font-black mb-4 text-center tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-teal-100 to-blue-200 drop-shadow-sm">
-                    Utrip
-                </h1>
 
                 <p className="text-neutral-400 text-center mb-12 font-medium leading-relaxed">
                     旅行体験から、あなたの<br />

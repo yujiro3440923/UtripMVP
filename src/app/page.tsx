@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { LogOut, Plus, MapPin, Activity, ChevronRight } from 'lucide-react'
 import type { User } from '@supabase/supabase-js'
 
@@ -88,13 +89,17 @@ export default function Home() {
       <div className="absolute top-[40%] right-[-10%] w-[400px] h-[400px] bg-blue-900/10 rounded-full blur-[100px] pointer-events-none animate-float" style={{ animationDelay: '3s' }}></div>
 
       {/* Header */}
-      <header className="px-6 py-5 flex justify-between items-center sticky top-0 bg-[#050505]/70 backdrop-blur-2xl z-20 border-b border-white/5 shadow-sm">
-        <h1 className="text-2xl font-black tracking-tight flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-600 flex items-center justify-center shadow-[0_0_20px_rgba(45,212,191,0.4)]">
-            <Activity className="text-neutral-900 w-6 h-6" strokeWidth={2.5} />
-          </div>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-neutral-400">Utrip</span>
-        </h1>
+      <header className="px-6 py-4 flex justify-between items-center sticky top-0 bg-[#050505]/70 backdrop-blur-2xl z-20 border-b border-white/5 shadow-sm">
+        <div className="flex items-center">
+          <Image
+            src="/images/Utriprogo.png"
+            alt="Utrip"
+            width={100}
+            height={32}
+            className="object-contain"
+            priority
+          />
+        </div>
         <button
           onClick={handleLogout}
           className="p-2.5 text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
@@ -161,8 +166,8 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col items-end gap-3">
                       <span className={`text-[10px] px-3 py-1.5 rounded-full font-bold tracking-widest ${trip.status === 'active' ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20 shadow-[0_0_15px_rgba(45,212,191,0.15)]' :
-                          trip.status === 'analyzed' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' :
-                            'bg-neutral-800 text-neutral-400 border border-neutral-700'
+                        trip.status === 'analyzed' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' :
+                          'bg-neutral-800 text-neutral-400 border border-neutral-700'
                         }`}>
                         {trip.status === 'active' ? 'RECORDING' : trip.status === 'analyzed' ? 'ANALYZED' : 'COMPLETED'}
                       </span>
