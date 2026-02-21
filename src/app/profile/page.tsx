@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { User } from '@supabase/supabase-js'
-import { ArrowLeft, User as UserIcon, Award, Settings, Palette, Edit2, Check, Sparkles, Navigation, Lock, Share2, Sun, Moon } from 'lucide-react'
+import { ArrowLeft, User as UserIcon, Award, Settings, Palette, Edit2, Check, Sparkles, Navigation, Lock, Share2, Sun, Moon, Orbit } from 'lucide-react'
 import { useTheme } from '@/providers/ThemeProvider'
 import { toast } from 'react-hot-toast'
 import { useSwipeNav } from '@/hooks/useSwipeNav'
@@ -348,6 +348,14 @@ export default function ProfilePage() {
                         <Navigation size={30} strokeWidth={2} className="text-neutral-500 rotate-45 ml-[-4px] mt-[4px]" />
                     </button>
                 </div>
+
+                {/* Nav Item: Orbit */}
+                <Link href="/orbit" className="flex flex-col items-center gap-1.5 text-neutral-500 hover:text-indigo-400 transition-colors group mb-2">
+                    <div className="p-2 rounded-2xl group-hover:bg-indigo-500/10 transition-all duration-300">
+                        <Orbit size={22} />
+                    </div>
+                    <span className="text-[10px] font-bold tracking-widest uppercase">Orbit</span>
+                </Link>
 
                 <button className="flex flex-col items-center gap-1.5 text-t-primary-400 group relative mb-2">
                     <div className="p-2 rounded-2xl bg-t-primary-500/10 group-hover:bg-t-primary-500/20 transition-all duration-300 shadow-[inset_0_1px_4px_rgba(255,255,255,0.1)]">

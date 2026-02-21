@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
 import Image from 'next/image'
-import { LogOut, Plus, MapPin, Activity, ChevronRight, Sparkles } from 'lucide-react'
+import { LogOut, Plus, MapPin, Activity, ChevronRight, Sparkles, Orbit } from 'lucide-react'
 import type { User } from '@supabase/supabase-js'
 import { useTheme } from '@/providers/ThemeProvider'
 import { useSwipeNav } from '@/hooks/useSwipeNav'
@@ -263,6 +263,14 @@ export default function Home() {
             旅をする
           </span>
         </div>
+
+        {/* Nav Item: Orbit */}
+        <Link href="/orbit" className="flex flex-col items-center gap-1.5 text-neutral-500 hover:text-indigo-400 transition-colors group mb-2">
+          <div className="p-2 rounded-2xl group-hover:bg-indigo-500/10 transition-all duration-300">
+            <Orbit size={22} />
+          </div>
+          <span className="text-[10px] font-bold tracking-widest uppercase">Orbit</span>
+        </Link>
 
         {/* Nav Item: Profile / Settings */}
         <Link href="/profile" className="flex flex-col items-center gap-1.5 text-neutral-500 hover:text-neutral-300 transition-colors group mb-2">
